@@ -95,6 +95,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, currency, onA
             if (onBuyNow) {
                 onBuyNow(product, buyNowBtnRef.current, defaultVariant);
             } else {
+                // Fallback if onBuyNow prop isn't passed (though App.tsx ensures it is)
                 onQuickAddToCart(product, addToCartBtnRef.current, defaultVariant);
             }
         }
@@ -183,7 +184,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, currency, onA
                         {product.stock > 0 && (
                             <button
                                 onClick={handleBuyNowClick}
-                                className="w-full py-3 rounded-lg font-bold text-xs transition-all shadow-md hover:shadow-lg bg-black hover:bg-gray-900 border border-transparent flex items-center justify-center relative overflow-hidden text-white transform hover:-translate-y-0.5"
+                                className="w-full py-3 rounded-lg font-bold text-xs transition-all shadow-md hover:shadow-lg bg-[#01875F] hover:bg-[#016f4e] border border-transparent flex items-center justify-center relative overflow-hidden text-white transform hover:-translate-y-0.5"
                                 title="Pagar ahora con Google Play"
                             >
                                 <GooglePlayLogoFull />
