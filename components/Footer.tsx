@@ -1,4 +1,5 @@
 
+
 import React, { useState, useEffect } from 'react';
 import type { View } from './types';
 
@@ -105,6 +106,7 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                            <FooterLink onClick={() => onNavigate('products', 'makeup')}>Maquillaje</FooterLink>
                            <FooterLink onClick={() => onNavigate('products', 'perfume')}>Fragancias</FooterLink>
                            <FooterLink onClick={() => onNavigate('products', 'wellness')}>Wellness</FooterLink>
+                           <FooterLink onClick={() => onNavigate('products', 'men')}>Hombre</FooterLink>
                            <FooterLink onClick={() => onNavigate('ofertas')}>Ideas Regalo</FooterLink>
                            <FooterLink onClick={() => onNavigate('catalog')}>Catálogo</FooterLink>
                            <FooterLink onClick={() => onNavigate('ia')}>Asistente IA</FooterLink>

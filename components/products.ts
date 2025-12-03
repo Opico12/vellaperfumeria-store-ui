@@ -3,6 +3,61 @@
 import type { Product } from './types';
 
 export const allProducts: Product[] = [
+    // --- MEN'S PRODUCTS (NEW) ---
+    {
+        id: 42490,
+        name: "Eau de Parfum Ascendant Intense",
+        brand: "Ascendant",
+        price: 34.99,
+        regularPrice: 52.00,
+        imageUrl: "https://media-cdn.oriflame.com/productImage?externalMediaId=product-management-media%2FProducts%2F42490%2F42490_1.png&MediaId=19190183&Version=2&w=600&bc=%23f5f5f5&ib=%23f5f5f5&h=600&q=90&imageFormat=WebP",
+        description: "Una fragancia intensa y poderosa para el hombre moderno. Notas orientales y especiadas de Cardamomo y Guaraná que dejan una huella imborrable.",
+        stock: 45,
+        category: 'men',
+        tag: 'NOVEDAD',
+        rating: 4.8,
+        reviewCount: 120
+    },
+    {
+        id: 35878,
+        name: "Limpiadora y Exfoliante de Carbón Activo North For Men",
+        brand: "North For Men",
+        price: 9.99,
+        regularPrice: 14.00,
+        imageUrl: "https://media-cdn.oriflame.com/productImage?externalMediaId=product-management-media%2FProducts%2F35878%2F35878_1.png&MediaId=19190183&Version=2&w=600&bc=%23f5f5f5&ib=%23f5f5f5&h=600&q=90&imageFormat=WebP",
+        description: "Gel limpiador facial profundo con Carbón Activo. Elimina impurezas, exceso de grasa y suciedad de la contaminación. Deja la piel fresca y energizada.",
+        stock: 80,
+        category: 'men',
+        rating: 4.7,
+        reviewCount: 95
+    },
+    {
+        id: 29446,
+        name: "Set Experto Novage Men",
+        brand: "Novage Men",
+        price: 89.99,
+        regularPrice: 139.00,
+        imageUrl: "https://media-cdn.oriflame.com/productImage?externalMediaId=product-management-media%2FProducts%2F29446%2F29446_1.png&MediaId=19190183&Version=2&w=600&bc=%23f5f5f5&ib=%23f5f5f5&h=600&q=90&imageFormat=WebP",
+        description: "La rutina definitiva antiedad diseñada específicamente para la piel masculina. Combate los signos de fatiga y arrugas con tecnología bioactiva. Incluye 4 productos paso a paso.",
+        stock: 15,
+        category: 'men',
+        tag: 'SET',
+        rating: 5.0,
+        reviewCount: 310
+    },
+    {
+        id: 35870,
+        name: "Gel de Afeitar Subzero North For Men",
+        brand: "North For Men",
+        price: 8.99,
+        regularPrice: 13.00,
+        imageUrl: "https://media-cdn.oriflame.com/productImage?externalMediaId=product-management-media%2FProducts%2F35870%2F35870_1.png&MediaId=19190183&Version=2&w=600&bc=%23f5f5f5&ib=%23f5f5f5&h=600&q=90&imageFormat=WebP",
+        description: "Gel de afeitado de alto rendimiento con tecnología Arctic Pro Defence y electrolitos. Proporciona un deslizamiento suave y una sensación de frescor extremo.",
+        stock: 65,
+        category: 'men',
+        rating: 4.6,
+        reviewCount: 78
+    },
     // --- HTML DUMP PRODUCTS (MAQUILLAJE) ---
     {
         id: 47188,
