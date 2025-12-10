@@ -1,5 +1,5 @@
 
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useMemo, useState } from 'react';
 import type { CartItem, View } from './types';
 import type { Currency } from './currency';
 import { formatCurrency } from './currency';
@@ -30,15 +30,6 @@ const CreditCardIcon = () => (
     </svg>
 );
 
-const GooglePlayLogo = () => (
-    <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M4.5 3.5L13.5 12L4.5 20.5V3.5Z" fill="#2196F3"/>
-        <path d="M13.5 12L18.5 17L21.5 12L18.5 7L13.5 12Z" fill="#FFC107"/>
-        <path d="M18.5 17L13.5 12L4.5 20.5L18.5 17Z" fill="#F44336"/>
-        <path d="M4.5 3.5L13.5 12L18.5 7L4.5 3.5Z" fill="#4CAF50"/>
-    </svg>
-);
-
 const CheckoutSummaryPage: React.FC<CheckoutSummaryPageProps> = ({ 
     cartItems, 
     currency, 
@@ -47,7 +38,7 @@ const CheckoutSummaryPage: React.FC<CheckoutSummaryPageProps> = ({
     // --- STATE MANAGEMENT ---
     const [isOrderComplete, setIsOrderComplete] = useState(false);
     const [isProcessing, setIsProcessing] = useState(false);
-    const [paymentMethod, setPaymentMethod] = useState<'card' | 'google_play'>('google_play');
+    const [paymentMethod, setPaymentMethod] = useState<'card'>('card');
     const [orderNumber, setOrderNumber] = useState('');
     
     // Customer Info
@@ -70,10 +61,6 @@ const CheckoutSummaryPage: React.FC<CheckoutSummaryPageProps> = ({
         cvc: '',
         name: ''
     });
-
-    const [googlePlayCode, setGooglePlayCode] = useState('');
-    const [googleAccountName, setGoogleAccountName] = useState('');
-    const [googleAccountEmail, setGoogleAccountEmail] = useState('');
 
     // --- CALCULATIONS ---
     const subtotal = useMemo(() => {
@@ -132,9 +119,9 @@ const CheckoutSummaryPage: React.FC<CheckoutSummaryPageProps> = ({
                 product_id: parseInt(item.product.id.toString().replace('wc-', '').replace('sim-', '')),
                 quantity: item.quantity
             })),
-            payment_method: paymentMethod === 'google_play' ? 'Google Play' : 'Credit Card',
-            payment_method_title: paymentMethod === 'google_play' ? 'Google Play Balance' : 'Credit Card',
-            customer_note: paymentMethod === 'google_play' ? `Google Play Account: ${googleAccountEmail} - Name: ${googleAccountName} - Code: ${googlePlayCode}` : ''
+            payment_method: 'Credit Card',
+            payment_method_title: 'Credit Card',
+            customer_note: ''
         };
 
         try {
@@ -163,6 +150,15 @@ const CheckoutSummaryPage: React.FC<CheckoutSummaryPageProps> = ({
     if (isOrderComplete) {
         return (
             <div className="min-h-screen bg-white flex flex-col items-center justify-center p-6 animate-fade-in">
+                <style>{`
+                    @keyframes fade-in {
+                        from { opacity: 0; transform: translateY(10px); }
+                        to { opacity: 1; transform: translateY(0); }
+                    }
+                    .animate-fade-in {
+                        animation: fade-in 0.5s ease-out forwards;
+                    }
+                `}</style>
                 <div className="max-w-lg w-full text-center space-y-8">
                     <div className="flex justify-center">
                         <div className="bg-green-50 rounded-full p-6">
@@ -198,7 +194,7 @@ const CheckoutSummaryPage: React.FC<CheckoutSummaryPageProps> = ({
                             </div>
                             <div>
                                 <p className="text-gray-500 text-xs uppercase font-bold">Método</p>
-                                <p className="font-medium text-gray-900">{paymentMethod === 'google_play' ? 'Google Play' : 'Tarjeta'}</p>
+                                <p className="font-medium text-gray-900">Tarjeta</p>
                             </div>
                             <div>
                                 <p className="text-gray-500 text-xs uppercase font-bold">Total</p>
@@ -247,6 +243,15 @@ const CheckoutSummaryPage: React.FC<CheckoutSummaryPageProps> = ({
     // --- CHECKOUT FORM VIEW ---
     return (
         <div className="bg-gray-50 min-h-screen pb-12">
+            <style>{`
+                @keyframes fade-in {
+                    from { opacity: 0; transform: translateY(10px); }
+                    to { opacity: 1; transform: translateY(0); }
+                }
+                .animate-fade-in {
+                    animation: fade-in 0.5s ease-out forwards;
+                }
+            `}</style>
             <div className="container mx-auto px-4 max-w-4xl mt-6">
                 
                 <h1 className="text-3xl font-extrabold text-black mb-8 text-center">Finalizar Compra</h1>
@@ -308,56 +313,15 @@ const CheckoutSummaryPage: React.FC<CheckoutSummaryPageProps> = ({
                         <h2 className="text-sm font-bold text-gray-900 uppercase tracking-wide mb-4 border-b pb-2">Método de Pago</h2>
 
                         {/* Payment Tabs */}
-                        <div className="grid grid-cols-2 gap-3 mb-6">
+                        <div className="grid grid-cols-1 gap-3 mb-6">
                             <button
                                 type="button"
-                                onClick={() => setPaymentMethod('google_play')}
-                                className={`relative p-4 rounded-xl border-2 flex flex-col items-center justify-center gap-2 transition-all cursor-pointer ${
-                                    paymentMethod === 'google_play' 
-                                    ? 'border-black bg-blue-50/30 ring-1 ring-black shadow-md' 
-                                    : 'border-gray-100 bg-gray-50 hover:bg-white'
-                                }`}
-                            >
-                                <GooglePlayLogo />
-                                <span className={`font-bold text-xs ${paymentMethod === 'google_play' ? 'text-black' : 'text-gray-500'}`}>Google Pay</span>
-                                {paymentMethod === 'google_play' && <div className="absolute top-2 right-2 text-green-600"><svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg></div>}
-                            </button>
-
-                            <button
-                                type="button"
-                                onClick={() => setPaymentMethod('card')}
-                                className={`relative p-4 rounded-xl border-2 flex flex-col items-center justify-center gap-2 transition-all cursor-pointer ${
-                                    paymentMethod === 'card' 
-                                    ? 'border-black bg-gray-50 ring-1 ring-black shadow-md' 
-                                    : 'border-gray-100 bg-gray-50 hover:bg-white'
-                                }`}
+                                className="relative p-4 rounded-xl border-2 flex flex-col items-center justify-center gap-2 transition-all cursor-pointer border-black bg-gray-50 ring-1 ring-black shadow-md"
                             >
                                 <CreditCardIcon />
-                                <span className={`font-bold text-xs ${paymentMethod === 'card' ? 'text-black' : 'text-gray-500'}`}>Tarjeta</span>
+                                <span className="font-bold text-xs text-black">Tarjeta de Crédito / Débito</span>
                             </button>
                         </div>
-
-                        {/* Google Play Form */}
-                        {paymentMethod === 'google_play' && (
-                            <div className="space-y-4 animate-fade-in bg-blue-50/20 p-4 rounded-xl border border-blue-100">
-                                <div className="flex items-center gap-2 text-sm text-blue-800 font-bold mb-2">
-                                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
-                                    Pago Seguro Google Pay
-                                </div>
-                                <div>
-                                    <label className="block text-xs font-bold text-gray-700 mb-1">Email de cuenta Google</label>
-                                    <input required type="email" placeholder="ejemplo@gmail.com" value={googleAccountEmail} onChange={(e) => setGoogleAccountEmail(e.target.value)} className="w-full border border-gray-300 rounded-lg p-3 bg-white focus:ring-2 focus:ring-blue-500 outline-none shadow-sm" />
-                                </div>
-                                <div>
-                                    <label className="block text-xs font-bold text-gray-700 mb-1">Nombre del Titular</label>
-                                    <input required type="text" placeholder="Nombre completo" value={googleAccountName} onChange={(e) => setGoogleAccountName(e.target.value)} className="w-full border border-gray-300 rounded-lg p-3 bg-white focus:ring-2 focus:ring-blue-500 outline-none shadow-sm" />
-                                </div>
-                                <div>
-                                     <label className="block text-xs font-bold text-gray-700 mb-1">Código Tarjeta Regalo (Opcional)</label>
-                                     <input type="text" placeholder="XXXX-XXXX-XXXX" value={googlePlayCode} onChange={(e) => setGooglePlayCode(e.target.value)} className="w-full border border-gray-300 rounded-lg p-3 bg-white focus:ring-2 focus:ring-blue-500 outline-none font-mono uppercase shadow-sm" />
-                                </div>
-                            </div>
-                        )}
 
                         {/* Credit Card Form */}
                         {paymentMethod === 'card' && (
@@ -410,7 +374,7 @@ const CheckoutSummaryPage: React.FC<CheckoutSummaryPageProps> = ({
                         </button>
                         
                         <p className="text-center text-xs text-gray-400 mt-4">
-                            Pagos procesados de forma segura por Google Pay.
+                            Pagos procesados de forma segura.
                         </p>
                     </div>
                 </form>

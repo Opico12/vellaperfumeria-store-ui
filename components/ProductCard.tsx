@@ -16,19 +16,6 @@ const StarIcon: React.FC<{ className?: string; style?: React.CSSProperties }> = 
     </svg>
 );
 
-// FULL GOOGLE PLAY LOGO
-const GooglePlayLogoFull = () => (
-    <div className="flex items-center justify-center gap-2">
-        <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M4.5 3.5L13.5 12L4.5 20.5V3.5Z" fill="white"/>
-            <path d="M13.5 12L18.5 17L21.5 12L18.5 7L13.5 12Z" fill="white" fillOpacity="0.8"/>
-            <path d="M18.5 17L13.5 12L4.5 20.5L18.5 17Z" fill="white" fillOpacity="0.6"/>
-            <path d="M4.5 3.5L13.5 12L18.5 7L4.5 3.5Z" fill="white" fillOpacity="0.6"/>
-        </svg>
-        <span className="font-sans font-bold text-white text-xs tracking-wide">PAGAR CON GOOGLE PLAY</span>
-    </div>
-);
-
 interface ProductCardProps {
     product: Product;
     currency: Currency;
@@ -43,7 +30,6 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, currency, onA
     const [isWishlist, setIsWishlist] = useState(false);
     const [imgSrc, setImgSrc] = useState(product.imageUrl);
     const addToCartBtnRef = useRef<HTMLButtonElement>(null);
-    const buyNowBtnRef = useRef<HTMLButtonElement>(null);
 
     useEffect(() => {
         setImgSrc(product.imageUrl);
@@ -73,31 +59,6 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, currency, onA
                 }
             }
             onQuickAddToCart(product, addToCartBtnRef.current, defaultVariant);
-        }
-    };
-
-    const handleBuyNowClick = (e: React.MouseEvent) => {
-        e.stopPropagation();
-        if (product.stock === 0) return;
-
-        if (hasManyVariants) {
-            onProductSelect(product);
-        } else {
-            let defaultVariant = null;
-            if (product.variants) {
-                defaultVariant = {};
-                for (const key in product.variants) {
-                     if (product.variants[key].length > 0) {
-                        defaultVariant[key] = product.variants[key][0].value;
-                     }
-                }
-            }
-            if (onBuyNow) {
-                onBuyNow(product, buyNowBtnRef.current, defaultVariant);
-            } else {
-                // Fallback if onBuyNow prop isn't passed (though App.tsx ensures it is)
-                onQuickAddToCart(product, addToCartBtnRef.current, defaultVariant);
-            }
         }
     };
 
@@ -180,18 +141,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, currency, onA
 
                     {/* Action Buttons Grid */}
                     <div className="space-y-2">
-                        {/* 1. GOOGLE PAY BUTTON - EXPLICIT & GREEN (Primary) */}
-                        {product.stock > 0 && (
-                            <button
-                                onClick={handleBuyNowClick}
-                                className="w-full py-3 rounded-lg font-bold text-xs transition-all shadow-md hover:shadow-lg bg-[#01875F] hover:bg-[#016f4e] border border-transparent flex items-center justify-center relative overflow-hidden text-white transform hover:-translate-y-0.5"
-                                title="Pagar ahora con Google Play"
-                            >
-                                <GooglePlayLogoFull />
-                            </button>
-                        )}
-
-                         {/* 2. Add to Cart (Secondary) */}
+                         {/* Add to Cart */}
                         <button
                             ref={addToCartBtnRef}
                             onClick={handleActionClick}

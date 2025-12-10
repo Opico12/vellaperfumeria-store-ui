@@ -1,3 +1,3 @@
 
-// This file is deprecated and no longer used. The checkout logic is handled directly in CartSidebar.tsx.
-export default {};
+// Este archivo ya no se utiliza. La lógica de pago está en CheckoutSummaryPage.tsx
+export default function CheckoutPage() { return null; }
