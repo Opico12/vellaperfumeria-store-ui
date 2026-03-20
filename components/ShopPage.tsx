@@ -96,16 +96,16 @@ const ShopPage: React.FC<{
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col md:flex-row gap-8">
                 <aside className="w-full md:w-1/4 lg:w-1/5">
-                    <h2 className="text-lg font-bold mb-4 border-b pb-2">Categorías</h2>
-                    <ul className="space-y-2">
+                    <h2 className="text-xl font-serif font-bold mb-8 border-b border-gray-100 pb-4 tracking-wide uppercase text-xs">Colecciones</h2>
+                    <ul className="space-y-4">
                         {categories.map(cat => (
                             <li key={cat.key}>
                                 <button
                                     onClick={() => setActiveCategory(cat.key)}
-                                    className={`w-full text-left px-3 py-2 rounded-md transition-colors text-sm ${
+                                    className={`w-full text-left py-2 transition-all duration-300 text-sm tracking-wide ${
                                         activeCategory === cat.key
-                                            ? 'bg-[var(--color-primary)] text-black font-bold border border-[var(--color-primary-solid)]'
-                                            : 'text-gray-700 hover:bg-gray-100'
+                                            ? 'text-black font-bold border-l-2 border-[var(--color-accent)] pl-4'
+                                            : 'text-gray-500 hover:text-black hover:pl-2'
                                     }`}
                                 >
                                     {cat.name}
@@ -116,29 +116,31 @@ const ShopPage: React.FC<{
                 </aside>
 
                 <main className="w-full md:w-3/4 lg:w-4/5">
-                    <h1 className="text-2xl font-bold text-rose-600 tracking-tight mb-4">{currentCategoryName}</h1>
-                    <div className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4 p-4 bg-white rounded-lg shadow-sm border">
-                        <p className="text-sm text-gray-700">
-                           {totalItems > 0 
-                             ? `Mostrando ${startItem}–${endItem} de ${totalItems} productos`
-                             : 'No hay productos'
-                           }
-                        </p>
-                        <form className="woocommerce-ordering">
-                            <select 
-                                name="orderby" 
-                                className="orderby border border-gray-300 rounded-md py-2 px-3 text-sm focus:ring-rose-400 focus:border-rose-400 bg-white"
-                                aria-label="Pedido de la tienda"
-                                value={sortOrder}
-                                onChange={handleSortChange}
-                            >
-                                <option value="menu_order">Orden predeterminado</option>
-                                <option value="popularity">Ordenar por popularidad</option>
-                                <option value="rating">Ordenar por puntuación media</option>
-                                <option value="price">Ordenar por precio: bajo a alto</option>
-                                <option value="price-desc">Ordenar por precio: alto a bajo</option>
-                            </select>
-                        </form>
+                    <div className="flex flex-col sm:flex-row justify-between items-baseline mb-12 gap-6 border-b border-gray-100 pb-8">
+                        <h1 className="text-3xl md:text-4xl font-serif font-bold text-black tracking-tight">{currentCategoryName}</h1>
+                        <div className="flex items-center gap-8">
+                            <p className="text-[10px] text-gray-400 uppercase tracking-[0.2em] font-sans">
+                               {totalItems > 0 
+                                 ? `${totalItems} Productos encontrados`
+                                 : 'Sin resultados'
+                               }
+                            </p>
+                            <form className="woocommerce-ordering">
+                                <select 
+                                    name="orderby" 
+                                    className="orderby border-none bg-transparent py-2 pr-8 pl-0 text-[10px] uppercase tracking-[0.2em] font-bold focus:ring-0 cursor-pointer"
+                                    aria-label="Pedido de la tienda"
+                                    value={sortOrder}
+                                    onChange={handleSortChange}
+                                >
+                                    <option value="menu_order">Orden Predeterminado</option>
+                                    <option value="popularity">Popularidad</option>
+                                    <option value="rating">Mejor Valorados</option>
+                                    <option value="price">Precio: Menor a Mayor</option>
+                                    <option value="price-desc">Precio: Mayor a Menor</option>
+                                </select>
+                            </form>
+                        </div>
                     </div>
 
                     {currentProducts.length > 0 ? (
@@ -160,24 +162,24 @@ const ShopPage: React.FC<{
 
                             {/* Pagination Controls */}
                             {totalPages > 1 && (
-                                <div className="mt-12 flex justify-center items-center gap-2">
+                                <div className="mt-20 flex justify-center items-center gap-4">
                                     <button
                                         onClick={() => handlePageChange(currentPage - 1)}
                                         disabled={currentPage === 1}
-                                        className="px-4 py-2 rounded-lg border border-gray-300 text-sm font-medium hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                                        className="text-[10px] uppercase tracking-[0.2em] font-bold disabled:opacity-30 disabled:cursor-not-allowed hover:text-[var(--color-accent)] transition-colors"
                                     >
                                         Anterior
                                     </button>
                                     
-                                    <div className="flex gap-1">
+                                    <div className="flex gap-4">
                                         {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
                                             <button
                                                 key={page}
                                                 onClick={() => handlePageChange(page)}
-                                                className={`w-10 h-10 rounded-lg text-sm font-bold flex items-center justify-center transition-all ${
+                                                className={`text-sm font-serif transition-all duration-300 ${
                                                     currentPage === page
-                                                        ? 'bg-black text-white shadow-md'
-                                                        : 'bg-white text-gray-700 hover:bg-gray-100 border border-transparent'
+                                                        ? 'text-black font-bold border-b border-black px-1'
+                                                        : 'text-gray-400 hover:text-black'
                                                 }`}
                                             >
                                                 {page}
@@ -188,7 +190,7 @@ const ShopPage: React.FC<{
                                     <button
                                         onClick={() => handlePageChange(currentPage + 1)}
                                         disabled={currentPage === totalPages}
-                                        className="px-4 py-2 rounded-lg border border-gray-300 text-sm font-medium hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                                        className="text-[10px] uppercase tracking-[0.2em] font-bold disabled:opacity-30 disabled:cursor-not-allowed hover:text-[var(--color-accent)] transition-colors"
                                     >
                                         Siguiente
                                     </button>

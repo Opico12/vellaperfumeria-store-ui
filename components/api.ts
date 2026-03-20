@@ -14,7 +14,7 @@ const CONSUMER_KEY = 'ck_b6e13280a1bc56be65cb8850411dd38e13301dc0';
 const CONSUMER_SECRET = 'cs_aa462cd190155c76aa1f8e13d578da5938a9b80c';
 // -----------------------------------------------------------------------------
 
-const getAuthHeader = () => {
+const getAuthHeader = (): Record<string, string> => {
     if (!CONSUMER_KEY || !CONSUMER_SECRET) return {};
     const hash = btoa(`${CONSUMER_KEY}:${CONSUMER_SECRET}`);
     return {

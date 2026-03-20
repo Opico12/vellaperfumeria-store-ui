@@ -81,24 +81,39 @@ const banners: BannerData[] = [
     }
 ];
 
-// Acondicionadores Duologi (La Oferta)
-const conditionerIds = [44960, 44961];
+// Acondicionadores y Tratamientos Duologi (La Oferta)
+const conditionerIds = [44960, 44961, 44968];
 const conditionerProducts = allProducts.filter(p => conditionerIds.includes(p.id));
 
 // Productos Selección (Trigger Products)
 const triggerProductIds = [
     47440, 46987, 47009, // Love Nature Simple Joys
-    46642, 46731, 45799, 45800, 47450, // Essense & Co
+    46642, 46643, 46731, 45799, 45800, 47450, // Essense & Co
     46801, // Divine Dark Velvet
     46968, 46969, 46970, 46971, // Milk & Honey
     36151, // Tender Care
     47878, // Esponja
     47677, // Cepillo
     47202, // Crema Manos Pasión
+    46982, // Feet Up Spray
 ];
 const triggerProducts = allProducts.filter(p => triggerProductIds.includes(p.id));
 
-// Black Friday Products
+// Ofertas de la Semana (Semana 2: 18 al 24 de Marzo)
+const weeklyOfferIds = [
+    38883, // Lip balm
+    42785, 40809, 42520, 42495, // Women Fragrances
+    42864, 38527, 45357, 45967, // Men Fragrances
+    13659, // Diamond Day Cream
+    46901, // Giordani Pearls
+];
+const weeklyOfferProducts = allProducts.filter(p => weeklyOfferIds.includes(p.id));
+
+// Premios Especiales (Elige tu Premio)
+const specialRewardIds = [150838, 41039, 46792, 46795, 47514];
+const specialRewardProducts = allProducts.filter(p => specialRewardIds.includes(p.id));
+
+// Black Friday / Seasonal Products
 const blackFridayProductIds = [38557, 42236, 38556, 42255, 41059, 47104, 47006];
 const blackFridayProducts = allProducts.filter(p => blackFridayProductIds.includes(p.id));
 
@@ -133,48 +148,46 @@ const OfertasPage: React.FC<{
     return (
         <div className="bg-white min-h-screen">
              {/* Header Section */}
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-4">
-                <div className="mb-6">
-                    <h1 className="text-3xl md:text-4xl font-extrabold text-black mb-6">Solo las mejores ofertas</h1>
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-6">
+                <div className="mb-8 text-center">
+                    <h1 className="text-3xl md:text-5xl font-serif italic text-black mb-6 tracking-tight">Selección Exclusiva</h1>
+                    <p className="text-gray-500 max-w-2xl mx-auto text-sm font-sans tracking-wide uppercase">
+                        Descubre las mejores propuestas y ofertas de la temporada
+                    </p>
                 </div>
                 
                 {/* Tabs / Navigation Visual */}
-                <div className="border-b border-gray-200 mb-6">
-                    <div className="flex space-x-8 overflow-x-auto scrollbar-hide">
-                        <button className="border-b-2 border-brand-primary text-brand-primary font-semibold py-2 px-1 whitespace-nowrap">
-                            Solo las mejores ofertas
+                <div className="border-b border-gray-100 mb-10">
+                    <div className="flex justify-center space-x-12 overflow-x-auto scrollbar-hide">
+                        <button className="border-b border-black text-black font-sans font-semibold py-3 px-2 whitespace-nowrap text-[10px] uppercase tracking-[0.2em]">
+                            Ofertas Destacadas
                         </button>
                     </div>
-                </div>
-
-                {/* Intro Text */}
-                <div className="mb-8 text-gray-700 text-base leading-relaxed max-w-4xl">
-                    <p>Si buscas gangas y descuentos, ¡estás en el lugar adecuado! Hemos reunido aquí todas las mejores ofertas de la campaña actual para que no te pierdas ninguna.</p>
                 </div>
             </div>
 
             {/* Banners Grid */}
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8 pb-16">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8 pb-20">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     {banners.map((banner) => (
                          <div 
                             key={banner.id} 
-                            className="group relative cursor-pointer overflow-hidden rounded-lg bg-gray-50 shadow-sm hover:shadow-md transition-shadow"
+                            className="group relative cursor-pointer overflow-hidden bg-white shadow-sm hover:shadow-xl transition-all duration-500"
                             onClick={() => handleBannerClick(banner)}
                          >
                             <div className="relative aspect-[4/3] overflow-hidden">
                                 <img 
                                     src={banner.imageUrl} 
                                     alt={banner.title}
-                                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                                 />
                             </div>
                             
-                            <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/70 via-black/30 to-transparent text-white">
-                                <h3 className="text-xl font-bold mb-4 leading-tight shadow-black drop-shadow-md">
+                            <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-500 flex flex-col justify-end p-8 text-white">
+                                <h3 className="text-2xl font-serif italic mb-6 leading-tight drop-shadow-lg">
                                     {banner.title}
                                 </h3>
-                                <button className="bg-[#f78df685] text-black border-2 border-[#f78df6] font-bold py-2 px-6 rounded-sm uppercase text-sm tracking-wider hover:bg-white hover:text-[#d946ef] transition-colors shadow-lg">
+                                <button className="w-fit bg-white text-black font-sans font-bold py-3 px-8 rounded-none uppercase text-[10px] tracking-[0.2em] hover:bg-black hover:text-white transition-all duration-300 border border-white">
                                     {banner.buttonText}
                                 </button>
                             </div>
@@ -183,14 +196,41 @@ const OfertasPage: React.FC<{
                 </div>
             </div>
 
-            {/* Black Friday Section */}
-            <div id="black-friday-section" className="bg-fuchsia-50 py-12 border-t border-fuchsia-100 scroll-mt-24">
+            {/* Weekly Offers Section */}
+            <div className="bg-white py-20 border-t border-gray-100">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="text-center mb-10">
-                        <span className="inline-block py-1 px-3 rounded-full bg-black text-white text-xs font-bold uppercase tracking-wider mb-4">Black Friday</span>
-                        <h2 className="text-3xl font-extrabold text-black mb-4">Compra 2 con un 60% Dto.</h2>
-                        <p className="text-gray-600 max-w-2xl mx-auto text-lg">
-                            Combina tus favoritos de esta selección y llévatelos con un descuento espectacular.
+                    <div className="text-center mb-16">
+                        <span className="inline-block py-1.5 px-4 bg-[var(--color-accent)] text-white text-[9px] font-bold uppercase tracking-[0.3em] mb-6">Semana 2: 18 al 24 de Marzo</span>
+                        <h2 className="text-3xl md:text-4xl font-serif italic text-black mb-6">Ofertas de la Semana</h2>
+                        <p className="text-gray-500 max-w-2xl mx-auto text-sm font-sans leading-relaxed tracking-wide">
+                            Aprovecha estos precios exclusivos disponibles solo por tiempo limitado.
+                        </p>
+                    </div>
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+                        {weeklyOfferProducts.map(product => (
+                            <ProductCard
+                                key={product.id}
+                                product={product}
+                                currency={currency}
+                                onAddToCart={onAddToCart}
+                                onQuickAddToCart={onQuickAddToCart}
+                                onBuyNow={onBuyNow}
+                                onProductSelect={onProductSelect}
+                                onQuickView={onQuickView}
+                            />
+                        ))}
+                    </div>
+                </div>
+            </div>
+
+            {/* Black Friday Section */}
+            <div id="black-friday-section" className="bg-gray-50 py-20 border-t border-gray-100 scroll-mt-24">
+                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="text-center mb-16">
+                        <span className="inline-block py-1.5 px-4 bg-black text-white text-[9px] font-bold uppercase tracking-[0.3em] mb-6">Promoción Especial</span>
+                        <h2 className="text-3xl md:text-4xl font-serif italic text-black mb-6">Venta de Temporada</h2>
+                        <p className="text-gray-500 max-w-2xl mx-auto text-sm font-sans leading-relaxed tracking-wide">
+                            Combina tus favoritos de esta selección y disfruta de condiciones exclusivas.
                         </p>
                     </div>
                     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
@@ -210,23 +250,47 @@ const OfertasPage: React.FC<{
                 </div>
             </div>
 
-            {/* Duologi Interactive Section */}
-            <div id="duologi-section" className="bg-white py-12 border-t border-gray-100 scroll-mt-24">
+            {/* Special Rewards Section */}
+            <div className="bg-neutral-50 py-20 border-t border-gray-100">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                     <div className="text-center mb-10">
-                        <h2 className="text-3xl font-extrabold text-black mb-4">Configura tu Pack Duologi</h2>
-                        <p className="text-gray-600 max-w-2xl mx-auto text-lg">
-                            1. Añade uno de los productos de selección a tu cesta.<br/>
-                            2. ¡Llévate tu acondicionador favorito por solo 6,99€!
+                    <div className="bg-white p-12 border border-gray-100 shadow-sm text-center max-w-4xl mx-auto">
+                        <h2 className="text-3xl font-serif italic text-black mb-6">¡Elige tu Premio!</h2>
+                        <p className="text-gray-600 font-sans text-sm tracking-wide mb-10 leading-relaxed">
+                            Realiza un pedido de 59€ o superior en este catálogo y elige uno de estos productos a un precio especial de <span className="font-bold text-black">3,00€</span>.
+                        </p>
+                        <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+                            {specialRewardProducts.map(product => (
+                                <div key={product.id} className="group cursor-pointer" onClick={() => onProductSelect(product)}>
+                                    <div className="aspect-square overflow-hidden mb-3 bg-gray-50 border border-gray-100">
+                                        <img src={product.imageUrl} alt={product.name} className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500" />
+                                    </div>
+                                    <p className="text-[8px] font-sans font-bold uppercase tracking-widest text-gray-400 truncate px-1">{product.name}</p>
+                                    <p className="text-xs font-sans font-bold text-black mt-1">3,00€</p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Duologi Interactive Section */}
+            <div id="duologi-section" className="bg-white py-20 border-t border-gray-100 scroll-mt-24">
+                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                     <div className="text-center mb-16">
+                        <h2 className="text-3xl md:text-4xl font-serif font-bold text-black mb-6">Configura tu Ritual Duologi</h2>
+                        <div className="w-16 h-px bg-[var(--color-accent)] mx-auto mb-6"></div>
+                        <p className="text-gray-500 max-w-2xl mx-auto text-sm font-sans tracking-wide leading-relaxed">
+                            1. Selecciona un producto de nuestra colección exclusiva.<br/>
+                            2. Adquiere tu tratamiento capilar Duologi por solo 6,99€.
                         </p>
                     </div>
 
-                    <div className="grid lg:grid-cols-12 gap-10">
+                    <div className="grid lg:grid-cols-12 gap-12">
                         {/* Step 1: The Trigger Products */}
                         <div className="lg:col-span-8">
-                             <div className="flex items-center gap-3 mb-6 border-b border-fuchsia-200 pb-4">
-                                <div className="bg-gray-900 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold shrink-0">1</div>
-                                <h3 className="text-xl font-bold text-gray-900">Elige tu producto de selección</h3>
+                             <div className="flex items-center gap-4 mb-8 border-b border-gray-100 pb-6">
+                                <div className="bg-black text-white rounded-full w-10 h-10 flex items-center justify-center font-serif italic text-lg shrink-0">1</div>
+                                <h3 className="text-xl font-serif font-bold text-gray-900 tracking-wide">Colección de Selección</h3>
                              </div>
                              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                                 {triggerProducts.slice(0, 6).map(product => (
@@ -245,16 +309,16 @@ const OfertasPage: React.FC<{
                         </div>
 
                         {/* Step 2: The Reward */}
-                        <div className="lg:col-span-4 bg-fuchsia-50 rounded-xl p-6 border border-fuchsia-100 h-fit sticky top-24 shadow-sm">
-                             <div className="flex items-center gap-3 mb-6 border-b border-fuchsia-100 pb-4">
-                                <div className="bg-brand-primary text-white rounded-full w-8 h-8 flex items-center justify-center font-bold shrink-0">2</div>
-                                <h3 className="text-xl font-bold text-gray-900">Elige tu Acondicionador</h3>
+                        <div className="lg:col-span-4 bg-gray-50 rounded-none p-8 border border-gray-100 h-fit sticky top-24 shadow-sm">
+                             <div className="flex items-center gap-4 mb-8 border-b border-gray-200 pb-6">
+                                <div className="bg-[var(--color-accent)] text-white rounded-full w-10 h-10 flex items-center justify-center font-serif italic text-lg shrink-0">2</div>
+                                <h3 className="text-xl font-serif font-bold text-gray-900 tracking-wide">Tratamiento Duologi</h3>
                              </div>
-                             <div className="space-y-6">
+                             <div className="space-y-8">
                                 {conditionerProducts.map(product => (
                                     <div key={product.id} className="relative">
-                                         <div className="absolute top-2 right-2 z-10 bg-red-500 text-white text-[10px] font-bold px-2 py-1 rounded shadow-sm">
-                                            SOLO 6,99€
+                                         <div className="absolute top-4 right-4 z-10 bg-black text-white text-[9px] font-bold px-3 py-1.5 uppercase tracking-[0.15em] shadow-lg">
+                                            PRECIO ESPECIAL 6,99€
                                         </div>
                                         <ProductCard
                                             product={product}

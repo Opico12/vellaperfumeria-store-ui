@@ -49,12 +49,12 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, currency, onA
         if (hasManyVariants) {
             onProductSelect(product);
         } else {
-            let defaultVariant = null;
+            let defaultVariant: Record<string, string> | null = null;
             if (product.variants) {
                 defaultVariant = {};
                 for (const key in product.variants) {
                      if (product.variants[key].length > 0) {
-                        defaultVariant[key] = product.variants[key][0].value;
+                        (defaultVariant as Record<string, string>)[key] = product.variants[key][0].value;
                      }
                 }
             }
@@ -95,45 +95,46 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, currency, onA
 
             {/* Image Section */}
             <div 
-                className="relative aspect-square overflow-hidden bg-white cursor-pointer"
+                className="relative aspect-[3/4] overflow-hidden bg-white cursor-pointer"
                 onClick={() => onProductSelect(product)}
             >
                 <img
                     src={imgSrc}
                     alt={product.name}
                     onError={() => setImgSrc('https://via.placeholder.com/300x300?text=Imagen+No+Disponible')}
-                    className="w-full h-full object-contain p-4 transition-transform duration-500 group-hover:scale-105"
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                     loading="lazy"
                 />
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300" />
             </div>
 
             {/* Content Section */}
-            <div className="p-4 flex flex-col flex-grow bg-white">
-                <div className="mb-1 flex justify-between items-start">
-                    <span className="text-xs font-bold text-gray-500 uppercase tracking-wide">{product.brand}</span>
+            <div className="p-5 flex flex-col flex-grow bg-white">
+                <div className="mb-2 flex justify-between items-center">
+                    <span className="text-[10px] font-sans font-bold text-neutral-400 uppercase tracking-[0.2em]">{product.brand}</span>
                     {product.rating && (
                         <div className="flex items-center gap-1">
                             <StarIcon className="text-amber-400" />
-                            <span className="text-xs font-medium text-gray-500">{product.rating}</span>
+                            <span className="text-[10px] font-bold text-neutral-500">{product.rating}</span>
                         </div>
                     )}
                 </div>
 
                 <h3 
-                    className="text-sm font-bold text-gray-900 mb-2 line-clamp-2 hover:text-fuchsia-600 transition-colors cursor-pointer"
+                    className="text-sm md:text-base font-serif font-medium text-black mb-3 line-clamp-2 hover:text-neutral-600 transition-colors cursor-pointer leading-snug tracking-wide"
                     onClick={() => onProductSelect(product)}
                 >
                     {product.name}
                 </h3>
 
                 {/* Price Section */}
-                <div className="mt-auto pt-2">
-                     <div className="flex items-center gap-2 flex-wrap mb-3">
-                        <span className={`text-lg font-extrabold ${isDiscounted ? 'text-red-600' : 'text-gray-900'}`}>
+                <div className="mt-auto pt-4 border-t border-neutral-50">
+                     <div className="flex items-baseline gap-3 flex-wrap mb-5">
+                        <span className={`text-lg md:text-xl font-sans font-bold tracking-tight ${isDiscounted ? 'text-red-600' : 'text-black'}`}>
                             {formatCurrency(product.price, currency)}
                         </span>
                         {isDiscounted && (
-                            <span className="text-sm text-gray-400 line-through">
+                            <span className="text-xs md:text-sm text-neutral-300 line-through font-medium">
                                 {formatCurrency(product.regularPrice!, currency)}
                             </span>
                         )}
@@ -146,10 +147,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, currency, onA
                             ref={addToCartBtnRef}
                             onClick={handleActionClick}
                             disabled={product.stock === 0}
-                            className={`w-full py-2 rounded-lg font-bold text-xs uppercase tracking-wide transition-all border ${
+                            className={`w-full py-2.5 rounded-none font-sans font-medium text-[10px] uppercase tracking-[0.2em] transition-all border ${
                                 product.stock === 0
-                                    ? 'bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed'
-                                    : 'bg-white text-gray-800 border-gray-300 hover:border-black hover:text-black'
+                                    ? 'bg-gray-50 text-gray-300 border-gray-100 cursor-not-allowed'
+                                    : 'bg-black text-white border-black hover:bg-white hover:text-black'
                             }`}
                         >
                             {product.stock === 0 ? 'Agotado' : 'Añadir al carrito'}

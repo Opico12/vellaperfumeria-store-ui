@@ -30,6 +30,13 @@ type AppView = {
     payload?: any;
 };
 
+// Global Floating WhatsApp Icon
+const WhatsAppFloatIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8 md:w-10 md:h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.894 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 4.315 1.919 6.066l-1.475 5.422 5.571-1.469z" />
+    </svg>
+);
+
 const App: React.FC = () => {
     const [view, setView] = useState<AppView>({ current: 'home' });
     const [cartItems, setCartItems] = useState<CartItem[]>([]);
@@ -348,17 +355,28 @@ const App: React.FC = () => {
         <div className="flex flex-col min-h-screen bg-white font-sans text-gray-800 relative">
 
             {isLoadingCart && (
-                <div className="fixed top-0 left-0 w-full h-1 bg-fuchsia-100 z-50">
-                    <div className="h-full bg-fuchsia-600 animate-[loading_1s_ease-in-out_infinite]"></div>
+                <div className="fixed top-0 left-0 w-full h-[2px] bg-neutral-100 z-[100]">
+                    <div className="h-full bg-black animate-[loading_1.5s_ease-in-out_infinite]"></div>
                     <style>{`
                         @keyframes loading {
                             0% { width: 0%; margin-left: 0; }
-                            50% { width: 50%; margin-left: 25%; }
+                            50% { width: 40%; margin-left: 30%; }
                             100% { width: 0%; margin-left: 100%; }
                         }
                     `}</style>
                 </div>
             )}
+
+            <a 
+                href="https://api.whatsapp.com/send?phone=34661202616&text=Hola,%20tengo%20una%20consulta%20sobre%20mi%20pedido%20en%20Vella%20Perfumería."
+                target="_blank"
+                rel="noopener noreferrer"
+                className="fixed bottom-24 md:bottom-10 right-6 z-[100] bg-black hover:bg-neutral-800 text-white p-4 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 flex items-center justify-center gap-3 group border border-white/10"
+                aria-label="Chat de WhatsApp"
+            >
+                <WhatsAppFloatIcon />
+                <span className="max-w-0 overflow-hidden group-hover:max-w-xs group-hover:ml-2 font-sans font-bold text-[10px] uppercase tracking-widest transition-all duration-500 ease-in-out whitespace-nowrap">Asesoría Personalizada</span>
+            </a>
             
             <Header
                 onNavigate={handleNavigate}
@@ -403,68 +421,57 @@ const App: React.FC = () => {
             )}
             
             <style>{`
+                @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap');
+
                 :root {
-                    --color-primary: #f78df685;
-                    --color-primary-solid: #d946ef;
+                    --color-primary: #004b57;
+                    --color-primary-solid: #004b57;
                     --color-secondary: #ffffff; 
-                    --color-accent: #c026d3;
+                    --color-accent: #d4af37;
+                    --color-red: #e60000;
+                    --font-serif: 'Playfair Display', serif;
+                    --font-sans: 'Montserrat', sans-serif;
                 }
+
+                body {
+                    font-family: var(--font-sans);
+                    background-color: #ffffff;
+                    color: #000000;
+                    -webkit-font-smoothing: antialiased;
+                    -moz-osx-font-smoothing: grayscale;
+                }
+
+                h1, h2, h3, h4, .font-serif {
+                    font-family: var(--font-serif);
+                    font-weight: 400;
+                    letter-spacing: 0.02em;
+                }
+
                 ::selection {
-                    background-color: var(--color-primary-solid);
-                    color: white;
+                    background-color: #000;
+                    color: #fff;
                 }
-                .btn-primary {
-                    background-color: var(--color-primary);
-                    color: black !important;
-                    padding: 0.75rem 1.5rem;
-                    border-radius: 0.75rem;
-                    font-weight: 600;
-                    transition: all 0.3s ease;
-                    border: 2px solid var(--color-primary-solid);
-                    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+
+                .custom-scrollbar::-webkit-scrollbar {
+                    width: 4px;
                 }
-                .btn-primary:hover {
-                    background-color: white;
-                    color: var(--color-primary-solid) !important;
-                    border-color: var(--color-primary-solid);
-                    transform: translateY(-2px);
-                    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+                .custom-scrollbar::-webkit-scrollbar-track {
+                    background: transparent;
                 }
-                 .bg-brand-primary { background-color: var(--color-primary); }
-                 .text-brand-primary { color: var(--color-primary-solid); }
-                 .bg-brand-secondary { background-color: var(--color-secondary); }
-                 .text-brand-accent { color: var(--color-accent); }
-                 .border-brand-primary { border-color: var(--color-primary-solid); }
-                 .ring-brand-primary { --tw-ring-color: var(--color-primary-solid); }
-                 .hover-underline-effect {
-                    display: inline-block;
-                    position: relative;
-                 }
-                 .hover-underline-effect::after {
-                    content: '';
-                    position: absolute;
-                    width: 100%;
-                    transform: scaleX(0);
-                    height: 2px;
-                    bottom: -2px;
-                    left: 0;
-                    background-color: var(--color-primary-solid);
-                    transform-origin: bottom right;
-                    transition: transform 0.25s ease-out;
-                 }
-                 .hover-underline-effect:hover::after {
-                    transform: scaleX(1);
-                    transform-origin: bottom left;
-                 }
-                 .logo-inverted { filter: brightness(0) invert(1); }
-                 @keyframes pop {
-                    0% { transform: scale(1); }
-                    50% { transform: scale(1.3); }
-                    100% { transform: scale(1); }
-                 }
-                 .animate-pop {
-                    animation: pop 0.3s ease-out;
-                 }
+                .custom-scrollbar::-webkit-scrollbar-thumb {
+                    background: #eee;
+                }
+                .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+                    background: #ddd;
+                }
+
+                .btn-luxury {
+                    @apply bg-black text-white font-sans font-bold py-4 px-8 rounded-none uppercase tracking-[0.2em] text-[10px] transition-all duration-300 hover:bg-neutral-800 active:scale-[0.98];
+                }
+
+                .input-luxury {
+                    @apply w-full border-b border-neutral-200 py-3 font-sans text-sm focus:border-black outline-none transition-all placeholder:text-neutral-300 bg-transparent;
+                }
             `}</style>
         </div>
     );

@@ -87,18 +87,18 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, currency, onCurrencyChange,
     }
 
     return (
-        <header className="bg-white shadow-sm sticky top-0 z-30">
+        <header className="bg-white sticky top-0 z-30 border-b border-gray-100">
             {/* Top Bar */}
-            <div className="bg-[var(--color-primary)] text-black py-1 text-[10px] md:text-xs font-medium border-b border-fuchsia-200/50">
+            <div className="bg-black text-white py-1.5 text-[10px] md:text-xs font-medium tracking-[0.15em] uppercase">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-                    <div className="hidden md:flex items-center space-x-3 text-black">
-                        <span className="cursor-pointer hover:opacity-75 transition-opacity" aria-label="Threads"><ThreadsIcon /></span>
-                        <span className="cursor-pointer hover:opacity-75 transition-opacity" aria-label="Instagram"><InstagramIcon /></span>
-                        <span className="cursor-pointer hover:opacity-75 transition-opacity" aria-label="Facebook"><FacebookIcon /></span>
+                    <div className="hidden md:flex items-center space-x-4">
+                        <span className="cursor-pointer hover:text-[var(--color-accent)] transition-colors" aria-label="Threads"><ThreadsIcon /></span>
+                        <span className="cursor-pointer hover:text-[var(--color-accent)] transition-colors" aria-label="Instagram"><InstagramIcon /></span>
+                        <span className="cursor-pointer hover:text-[var(--color-accent)] transition-colors" aria-label="Facebook"><FacebookIcon /></span>
                     </div>
-                    <div className="block w-full text-center text-black">
-                        <span>
-                            <span className="font-extrabold text-black">BLACK FRIDAY</span> | Envío GRATIS +35€
+                    <div className="block w-full text-center">
+                        <span className="flex items-center justify-center gap-2">
+                            <span className="font-bold text-[var(--color-accent)]">Venta Exclusiva</span> | Envío de Cortesía +35€
                         </span>
                     </div>
                     <div className="hidden md:flex items-center space-x-4">
@@ -109,7 +109,7 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, currency, onCurrencyChange,
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 
                 {/* MOBILE HEADER: Centered Logo, Left Menu, Right Cart */}
-                <div className="md:hidden flex items-center justify-between py-3 relative">
+                <div className="md:hidden flex items-center justify-between py-4 relative">
                     <div className="z-20">
                         <button onClick={() => setIsMobileMenuOpen(true)} className="text-black p-2">
                             <MenuIcon />
@@ -125,19 +125,19 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, currency, onCurrencyChange,
                             <img 
                                 src="https://i0.wp.com/vellaperfumeria.com/wp-content/uploads/2025/06/1000003724-removebg-preview.png" 
                                 alt="Vellaperfumeria Logo" 
-                                className="h-24 w-auto object-contain" 
+                                className="h-20 w-auto object-contain" 
                             />
                         </button>
                     </div>
 
                     <div className="z-20">
                         <button 
-                            className={`cart-dest-icon relative p-2 text-black hover:text-[var(--color-primary-solid)] transition-colors ${cartPulse ? 'animate-pop' : ''}`}
+                            className={`cart-dest-icon relative p-2 text-black hover:text-[var(--color-accent)] transition-colors ${cartPulse ? 'animate-pop' : ''}`}
                             onClick={onCartClick}
                         >
                             <CartIcon />
                             {cartCount > 0 && (
-                                <span className="absolute -top-1 -right-1 inline-flex items-center justify-center w-5 h-5 text-xs font-bold leading-none text-white bg-fuchsia-600 rounded-full border-2 border-white">
+                                <span className="absolute -top-1 -right-1 inline-flex items-center justify-center w-4 h-4 text-[9px] font-bold leading-none text-white bg-black rounded-full border border-white">
                                     {cartCount}
                                 </span>
                             )}
@@ -146,9 +146,9 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, currency, onCurrencyChange,
                 </div>
 
                 {/* DESKTOP HEADER: Stacked Layout - Logo Centered Top, Nav Below */}
-                <div className="hidden md:flex flex-col items-center py-4 relative">
+                <div className="hidden md:flex flex-col items-center py-6 relative">
                     {/* Row 1: Logo Centered */}
-                    <div className="w-full flex justify-center items-center relative mb-4">
+                    <div className="w-full flex justify-center items-center relative mb-6">
                         <button 
                             onClick={() => onNavigate('home')}
                             className="block cursor-pointer transition-transform hover:scale-105 duration-300 bg-transparent border-none p-0"
@@ -156,19 +156,19 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, currency, onCurrencyChange,
                             <img 
                                 src="https://i0.wp.com/vellaperfumeria.com/wp-content/uploads/2025/06/1000003724-removebg-preview.png" 
                                 alt="Vellaperfumeria Logo" 
-                                className="h-28 w-auto object-contain" 
+                                className="h-24 w-auto object-contain" 
                             />
                         </button>
 
                         {/* Cart Icon - Absolute Right in the Logo Row */}
                         <div className="absolute right-0 top-1/2 transform -translate-y-1/2">
                             <button 
-                                className={`cart-dest-icon relative p-2 text-black hover:text-[var(--color-primary-solid)] transition-colors ${cartPulse ? 'animate-pop' : ''}`}
+                                className={`cart-dest-icon relative p-2 text-black hover:text-[var(--color-accent)] transition-colors ${cartPulse ? 'animate-pop' : ''}`}
                                 onClick={onCartClick}
                             >
                                 <CartIcon />
                                 {cartCount > 0 && (
-                                    <span className="absolute -top-1 -right-1 inline-flex items-center justify-center w-5 h-5 text-xs font-bold leading-none text-white bg-fuchsia-600 rounded-full border-2 border-white">
+                                    <span className="absolute -top-1 -right-1 inline-flex items-center justify-center w-5 h-5 text-[10px] font-bold leading-none text-white bg-black rounded-full border border-white">
                                         {cartCount}
                                     </span>
                                 )}
@@ -177,13 +177,13 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, currency, onCurrencyChange,
                     </div>
 
                     {/* Row 2: Navigation Menu Centered */}
-                    <nav className="flex justify-center space-x-8 w-full border-t border-gray-100 pt-4">
-                        <NavLink onClick={() => onNavigate('home')}>Inicio</NavLink>
-                        <NavLink onClick={() => onNavigate('products', 'all')}>Tienda</NavLink>
-                        <NavLink onClick={() => onNavigate('ofertas')}>Ideas Regalo</NavLink>
-                        <NavLink onClick={() => onNavigate('catalog')}>Catálogo</NavLink>
-                        <NavLink onClick={() => onNavigate('ia')}>Asistente IA</NavLink>
-                        <NavLink onClick={() => onNavigate('blog')}>Blog</NavLink>
+                    <nav className="flex justify-center space-x-10 w-full border-t border-gray-50 pt-6">
+                        <NavLink onClick={() => onNavigate('home')} className="font-serif italic tracking-wide">Inicio</NavLink>
+                        <NavLink onClick={() => onNavigate('products', 'all')} className="uppercase text-xs tracking-[0.2em]">Tienda</NavLink>
+                        <NavLink onClick={() => onNavigate('ofertas')} className="uppercase text-xs tracking-[0.2em]">Ideas Regalo</NavLink>
+                        <NavLink onClick={() => onNavigate('catalog')} className="uppercase text-xs tracking-[0.2em]">Catálogo</NavLink>
+                        <NavLink onClick={() => onNavigate('ia')} className="uppercase text-xs tracking-[0.2em]">Asistente IA</NavLink>
+                        <NavLink onClick={() => onNavigate('blog')} className="uppercase text-xs tracking-[0.2em]">Blog</NavLink>
                     </nav>
                 </div>
             </div>
@@ -191,22 +191,22 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, currency, onCurrencyChange,
             {/* Mobile Menu Overlay */}
             {isMobileMenuOpen && (
                 <div className="fixed inset-0 z-50 md:hidden">
-                    <div className="absolute inset-0 bg-black bg-opacity-50 backdrop-blur-sm" onClick={() => setIsMobileMenuOpen(false)}></div>
-                    <div ref={navRef} className="absolute top-0 left-0 w-4/5 max-w-xs h-full bg-white shadow-xl flex flex-col transform transition-transform duration-300 ease-in-out">
-                        <div className="p-5 flex justify-between items-center border-b bg-[var(--color-secondary)]">
-                            <span className="font-bold text-lg text-[var(--color-primary-solid)]">Menú</span>
-                            <button onClick={() => setIsMobileMenuOpen(false)} className="p-2 text-gray-500">
+                    <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setIsMobileMenuOpen(false)}></div>
+                    <div ref={navRef} className="absolute top-0 left-0 w-4/5 max-w-xs h-full bg-white shadow-2xl flex flex-col transform transition-transform duration-300 ease-in-out">
+                        <div className="p-6 flex justify-between items-center border-b">
+                            <span className="font-serif italic text-xl text-black">Menú</span>
+                            <button onClick={() => setIsMobileMenuOpen(false)} className="p-2 text-gray-400">
                                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
                             </button>
                         </div>
-                        <div className="flex-grow overflow-y-auto py-4">
-                             <button onClick={() => handleMobileNav('home')} className="block w-full text-left px-6 py-3 text-lg font-medium text-gray-800 hover:bg-fuchsia-50 hover:text-[var(--color-primary-solid)]">Inicio</button>
-                             <button onClick={() => handleMobileNav('products', 'all')} className="block w-full text-left px-6 py-3 text-lg font-medium text-gray-800 hover:bg-fuchsia-50 hover:text-[var(--color-primary-solid)]">Tienda</button>
-                             <button onClick={() => handleMobileNav('ofertas')} className="block w-full text-left px-6 py-3 text-lg font-medium text-gray-800 hover:bg-fuchsia-50 hover:text-[var(--color-primary-solid)]">Ideas Regalo</button>
-                             <button onClick={() => handleMobileNav('catalog')} className="block w-full text-left px-6 py-3 text-lg font-medium text-gray-800 hover:bg-fuchsia-50 hover:text-[var(--color-primary-solid)]">Catálogo</button>
-                             <button onClick={() => handleMobileNav('ia')} className="block w-full text-left px-6 py-3 text-lg font-medium text-gray-800 hover:bg-fuchsia-50 hover:text-[var(--color-primary-solid)]">Asistente IA</button>
-                             <button onClick={() => handleMobileNav('blog')} className="block w-full text-left px-6 py-3 text-lg font-medium text-gray-800 hover:bg-fuchsia-50 hover:text-[var(--color-primary-solid)]">Blog</button>
-                             <button onClick={() => handleMobileNav('contact')} className="block w-full text-left px-6 py-3 text-lg font-medium text-gray-800 hover:bg-fuchsia-50 hover:text-[var(--color-primary-solid)]">Ayuda / Contacto</button>
+                        <div className="flex-grow overflow-y-auto py-6">
+                             <button onClick={() => handleMobileNav('home')} className="block w-full text-left px-8 py-4 text-sm font-medium uppercase tracking-[0.2em] text-gray-900 hover:bg-gray-50">Inicio</button>
+                             <button onClick={() => handleMobileNav('products', 'all')} className="block w-full text-left px-8 py-4 text-sm font-medium uppercase tracking-[0.2em] text-gray-900 hover:bg-gray-50">Tienda</button>
+                             <button onClick={() => handleMobileNav('ofertas')} className="block w-full text-left px-8 py-4 text-sm font-medium uppercase tracking-[0.2em] text-gray-900 hover:bg-gray-50">Ideas Regalo</button>
+                             <button onClick={() => handleMobileNav('catalog')} className="block w-full text-left px-8 py-4 text-sm font-medium uppercase tracking-[0.2em] text-gray-900 hover:bg-gray-50">Catálogo</button>
+                             <button onClick={() => handleMobileNav('ia')} className="block w-full text-left px-8 py-4 text-sm font-medium uppercase tracking-[0.2em] text-gray-900 hover:bg-gray-50">Asistente IA</button>
+                             <button onClick={() => handleMobileNav('blog')} className="block w-full text-left px-8 py-4 text-sm font-medium uppercase tracking-[0.2em] text-gray-900 hover:bg-gray-50">Blog</button>
+                             <button onClick={() => handleMobileNav('contact')} className="block w-full text-left px-8 py-4 text-sm font-medium uppercase tracking-[0.2em] text-gray-900 hover:bg-gray-50">Ayuda / Contacto</button>
                         </div>
                     </div>
                 </div>

@@ -125,7 +125,7 @@ const SpecialOffersCarousel: React.FC<SpecialOffersCarouselProps> = ({ onProduct
                     <div className="container mx-auto h-full flex flex-col md:flex-row items-center justify-between px-6 md:px-16 py-8 gap-6">
                         <div className={`md:w-1/2 text-center md:text-left space-y-4 ${slide.textClass} ${index === currentIndex ? 'animate-fade-in-up' : ''}`}>
                             <span className="inline-block py-1 px-3 rounded-full bg-white/80 text-xs font-bold tracking-widest mb-2 shadow-sm uppercase text-black">
-                                Catálogo 16
+                                Catálogo 4
                             </span>
                             <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight">{slide.title}</h2>
                             <h3 className="text-lg md:text-2xl font-semibold opacity-90">{slide.subtitle}</h3>

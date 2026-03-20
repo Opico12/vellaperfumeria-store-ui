@@ -57,8 +57,8 @@ const BottomNavBar: React.FC<BottomNavBarProps> = ({ onNavigate, currentView }) 
     ];
 
     return (
-        <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-xl border-t border-gray-200/50 shadow-[0_-4px_24px_rgba(0,0,0,0.06)] z-50 pb-safe transition-all">
-            <nav className="flex justify-around items-end h-[4.5rem] pb-2">
+        <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-neutral-100 z-50 pb-safe">
+            <nav className="flex justify-around items-center h-16">
                 {navItems.map(item => {
                     const isActive = !item.isExternal && (item.view === 'products'
                         ? (currentView === 'products' || currentView === 'productDetail')
@@ -66,27 +66,9 @@ const BottomNavBar: React.FC<BottomNavBarProps> = ({ onNavigate, currentView }) 
                         
                     const Icon = item.icon;
 
-                    const commonClasses = `flex flex-col items-center justify-center w-full h-full transition-all duration-200 active:scale-90 touch-manipulation ${
-                                isActive ? 'text-fuchsia-600' : 'text-gray-500 hover:text-fuchsia-500'
+                    const commonClasses = `flex flex-col items-center justify-center w-full h-full transition-all duration-300 active:scale-95 touch-manipulation ${
+                                isActive ? 'text-black' : 'text-neutral-400 hover:text-black'
                             }`;
-
-                    if (item.isExternal && item.href) {
-                        return (
-                            <a
-                                key={item.label}
-                                href={item.href}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className={commonClasses}
-                                aria-label={item.label}
-                            >
-                                <div className={`p-1 rounded-full transition-all ${isActive ? 'bg-fuchsia-50' : ''}`}>
-                                    <Icon isActive={isActive} />
-                                </div>
-                                <span className={`text-[10px] font-medium mt-1 leading-none transition-all ${isActive ? 'font-bold translate-y-0' : 'font-normal'}`}>{item.label}</span>
-                            </a>
-                        );
-                    }
 
                     return (
                         <button
@@ -99,10 +81,8 @@ const BottomNavBar: React.FC<BottomNavBarProps> = ({ onNavigate, currentView }) 
                             aria-label={item.label}
                             aria-current={isActive ? 'page' : undefined}
                         >
-                            <div className={`p-1 rounded-full transition-all ${isActive ? 'bg-fuchsia-50' : ''}`}>
-                                <Icon isActive={isActive} />
-                            </div>
-                            <span className={`text-[10px] font-medium mt-1 leading-none transition-all ${isActive ? 'font-bold translate-y-0' : 'font-normal'}`}>{item.label}</span>
+                            <Icon isActive={isActive} />
+                            <span className={`text-[9px] font-sans font-bold uppercase tracking-[0.15em] mt-1 transition-all ${isActive ? 'opacity-100' : 'opacity-70'}`}>{item.label}</span>
                         </button>
                     )
                 })}

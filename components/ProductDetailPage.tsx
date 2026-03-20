@@ -120,39 +120,38 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ product, currency
         .slice(0, 4);
 
     return (
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <div className="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100">
-                <div className="md:flex">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div className="bg-white overflow-hidden">
+                <div className="md:flex gap-20">
                     {/* Product Image Gallery */}
-                    <div className="md:w-1/2 bg-fuchsia-50/50 p-8 relative group">
-                        <div className="relative aspect-square rounded-2xl bg-white shadow-inner p-4 cursor-zoom-in" onClick={() => setIsLightboxOpen(true)}>
+                    <div className="md:w-[55%] relative group">
+                        <div className="relative aspect-[4/5] bg-neutral-50 overflow-hidden cursor-zoom-in" onClick={() => setIsLightboxOpen(true)}>
                             <img 
                                 src={currentImageUrl} 
                                 alt={product.name} 
-                                className="w-full h-full object-contain transition-transform duration-500 hover:scale-105" 
+                                className="w-full h-full object-cover transition-transform duration-1000 hover:scale-110" 
                             />
                             {isDiscounted && (
-                                <div className="absolute top-4 left-4 bg-fuchsia-600 text-white text-sm font-bold px-3 py-1 rounded-full shadow-lg">
-                                    -{discountPercentage}%
+                                <div className="absolute top-8 left-8 bg-black text-white text-[11px] font-bold px-5 py-2.5 tracking-[0.25em] uppercase shadow-2xl">
+                                    Oferta Especial
                                 </div>
                             )}
-                             <div className="absolute bottom-4 right-4 bg-white/80 backdrop-blur-sm p-2 rounded-full shadow-sm opacity-0 group-hover:opacity-100 transition-opacity">
-                                <svg className="w-6 h-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" /></svg>
+                             <div className="absolute bottom-8 right-8 bg-white/95 backdrop-blur-md p-4 rounded-full shadow-xl opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+                                <svg className="w-6 h-6 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" /></svg>
                             </div>
                         </div>
                         
-                        {/* Thumbnail Gallery (Simulated if variants have images) */}
+                        {/* Thumbnail Gallery */}
                         {product.variants && Object.values(product.variants).some((opts: VariantOption[]) => opts.some(o => o.imageUrl)) && (
-                             <div className="flex gap-2 mt-4 overflow-x-auto pb-2 scrollbar-hide">
+                             <div className="flex gap-4 mt-8 overflow-x-auto pb-4 scrollbar-hide">
                                 {Object.values(product.variants).flat().filter((opt: VariantOption) => opt.imageUrl).map((opt: VariantOption, idx: number) => (
                                     <button 
                                         key={idx}
                                         onClick={() => {
-                                            // Find which variant type this option belongs to
                                             const type = Object.keys(product.variants!).find(key => product.variants![key].includes(opt));
                                             if (type) handleVariantChange(type, opt.value);
                                         }}
-                                        className={`w-16 h-16 border-2 rounded-lg overflow-hidden flex-shrink-0 ${currentImageUrl === opt.imageUrl ? 'border-fuchsia-500' : 'border-transparent hover:border-fuchsia-300'}`}
+                                        className={`w-24 h-32 border transition-all duration-500 flex-shrink-0 ${currentImageUrl === opt.imageUrl ? 'border-black scale-105 shadow-md' : 'border-neutral-100 hover:border-neutral-300'}`}
                                     >
                                         <img src={opt.imageUrl!} alt={opt.value} className="w-full h-full object-cover" />
                                     </button>
@@ -160,64 +159,62 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ product, currency
                              </div>
                         )}
                     </div>
-
+ 
                     {/* Product Info */}
-                    <div className="md:w-1/2 p-8 md:p-12 flex flex-col">
-                        <div className="mb-2">
-                            <span className="text-sm font-bold text-fuchsia-600 uppercase tracking-wider">{product.brand}</span>
+                    <div className="md:w-[45%] py-6 flex flex-col">
+                        <div className="mb-6">
+                            <span className="text-[11px] font-bold text-neutral-400 uppercase tracking-[0.4em]">{product.brand}</span>
                         </div>
-                        <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4 leading-tight">{product.name}</h1>
+                        <h1 className="text-4xl md:text-6xl font-serif font-medium text-black mb-8 leading-[1.1] tracking-tight">{product.name}</h1>
                         
-                        <div className="flex items-center gap-4 mb-6">
+                        <div className="flex items-center gap-8 mb-12">
                             {product.rating && (
-                                <div className="flex items-center bg-amber-50 px-2 py-1 rounded-md border border-amber-100">
-                                    <div className="flex text-amber-400">
+                                <div className="flex items-center">
+                                    <div className="flex text-black gap-0.5">
                                         {[...Array(5)].map((_, i) => (
-                                            <StarIcon key={i} className={i < Math.floor(product.rating!) ? "w-4 h-4" : "w-4 h-4 text-gray-300"} />
+                                            <StarIcon key={i} className={i < Math.floor(product.rating!) ? "w-3.5 h-3.5" : "w-3.5 h-3.5 text-neutral-100"} />
                                         ))}
                                     </div>
-                                    <span className="ml-2 text-sm font-semibold text-amber-700">{product.rating}</span>
-                                    <span className="mx-2 text-gray-300">|</span>
-                                    <span className="text-xs text-gray-500">{product.reviewCount} reseñas</span>
+                                    <span className="ml-4 text-[10px] font-bold tracking-[0.2em] text-neutral-400 uppercase">{product.reviewCount} Opiniones</span>
                                 </div>
                             )}
                             {stockInfo.text === 'En stock' && (
-                                <span className="text-sm text-green-600 font-medium flex items-center gap-1">
-                                    <span className="w-2 h-2 bg-green-500 rounded-full"></span>
-                                    En stock
+                                <span className="text-[10px] text-neutral-400 font-bold uppercase tracking-[0.2em] flex items-center gap-2.5">
+                                    <span className="w-2 h-2 bg-black rounded-full animate-pulse"></span>
+                                    En Existencia
                                 </span>
                             )}
                         </div>
-
-                        <div className="mb-8">
-                            <div className="flex items-baseline gap-3">
-                                <span className="text-4xl font-bold text-fuchsia-700">{formatCurrency(product.price, currency)}</span>
+ 
+                        <div className="mb-14">
+                            <div className="flex items-baseline gap-6">
+                                <span className="text-5xl font-sans font-bold text-black tracking-tighter">{formatCurrency(product.price, currency)}</span>
                                 {isDiscounted && (
-                                    <span className="text-xl text-gray-400 line-through">{formatCurrency(product.regularPrice!, currency)}</span>
+                                    <span className="text-2xl text-neutral-200 line-through font-sans font-medium">{formatCurrency(product.regularPrice!, currency)}</span>
                                 )}
                             </div>
                             {product.isShippingSaver && (
-                                <div className="inline-block mt-2 bg-fuchsia-100 text-fuchsia-700 px-3 py-1 rounded-full text-xs font-bold tracking-wide">
-                                    🚚 ENVÍO GRATIS
+                                <div className="inline-block mt-6 text-[11px] text-neutral-500 font-bold tracking-[0.25em] uppercase border-b border-neutral-100 pb-1.5">
+                                    Envío de Cortesía Incluido
                                 </div>
                             )}
                         </div>
 
-                        <p className="text-gray-600 text-lg leading-relaxed mb-8">{product.description}</p>
+                        <p className="text-gray-600 text-lg leading-relaxed mb-12 font-sans font-light">{product.description}</p>
 
                         {/* Variants Selection */}
                         {product.variants && (
-                            <div className="space-y-6 mb-8 p-6 bg-gray-50 rounded-2xl border border-gray-100">
+                            <div className="space-y-10 mb-12">
                                 {Object.keys(product.variants).map((type) => {
                                     const options = product.variants![type];
                                     if (!Array.isArray(options)) return null;
                                     
                                     return (
                                         <div key={type}>
-                                            <h3 className="text-sm font-bold text-gray-800 mb-3 uppercase tracking-wide">
-                                                {type}: <span className="text-fuchsia-600">{selectedVariant?.[type]}</span>
+                                            <h3 className="text-[10px] font-bold text-black mb-4 uppercase tracking-[0.2em]">
+                                                {type}: <span className="text-gray-400 ml-2">{selectedVariant?.[type]}</span>
                                             </h3>
-                                            <div className="flex flex-wrap gap-3">
+                                            <div className="flex flex-wrap gap-4">
                                                 {options.map(option => {
                                                     const isSelected = selectedVariant?.[type] === option.value;
                                                     if (option.colorCode) {
@@ -225,7 +222,7 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ product, currency
                                                             <button
                                                                 key={option.value}
                                                                 onClick={() => handleVariantChange(type, option.value)}
-                                                                className={`w-10 h-10 rounded-full border-2 shadow-sm transition-all transform hover:scale-110 ${isSelected ? 'border-fuchsia-600 ring-2 ring-offset-2 ring-fuchsia-200' : 'border-white'}`}
+                                                                className={`w-8 h-8 rounded-full border transition-all duration-300 transform hover:scale-110 ${isSelected ? 'border-black ring-1 ring-offset-4 ring-black' : 'border-gray-100'}`}
                                                                 style={{ backgroundColor: option.colorCode }}
                                                                 aria-label={`Seleccionar color ${option.value}`}
                                                                 title={option.value}
@@ -236,7 +233,7 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ product, currency
                                                         <button
                                                             key={option.value}
                                                             onClick={() => handleVariantChange(type, option.value)}
-                                                            className={`px-4 py-2 text-sm font-medium rounded-lg border-2 transition-all ${isSelected ? 'bg-black text-white border-black shadow-md' : 'bg-white text-gray-700 border-gray-200 hover:border-fuchsia-300 hover:text-fuchsia-600'}`}
+                                                            className={`px-6 py-2 text-[10px] uppercase tracking-widest font-bold border transition-all duration-300 ${isSelected ? 'bg-black text-white border-black' : 'bg-white text-gray-400 border-gray-100 hover:border-black hover:text-black'}`}
                                                         >
                                                             {option.value}
                                                         </button>
@@ -250,13 +247,13 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ product, currency
                         )}
 
                         {/* Actions */}
-                        <div className="mt-auto space-y-4">
-                            <div className="flex flex-col sm:flex-row gap-4">
+                        <div className="mt-auto space-y-6">
+                            <div className="flex flex-col gap-4">
                                 <button
                                     ref={addToCartBtnRef}
                                     onClick={() => onAddToCart(product, addToCartBtnRef.current, selectedVariant)}
                                     disabled={isOutOfStock}
-                                    className={`flex-1 bg-[var(--color-primary)] text-black border-2 border-[var(--color-primary-solid)] font-bold text-lg py-4 px-8 rounded-xl shadow-lg hover:shadow-fuchsia-200 transition-all transform hover:-translate-y-1 hover:bg-white hover:text-[var(--color-primary-solid)] ${isOutOfStock ? 'bg-gray-200 text-gray-400 cursor-not-allowed border-gray-200 shadow-none hover:text-gray-400 hover:bg-gray-200 hover:transform-none' : ''}`}
+                                    className={`w-full bg-black text-white font-bold text-xs uppercase tracking-[0.3em] py-5 px-8 transition-all duration-300 hover:bg-white hover:text-black border border-black ${isOutOfStock ? 'bg-gray-100 text-gray-300 cursor-not-allowed border-gray-100' : ''}`}
                                 >
                                     {isOutOfStock ? 'Agotado' : 'Añadir a la cesta'}
                                 </button>
@@ -265,7 +262,7 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ product, currency
                                     <button
                                         ref={buyNowBtnRef}
                                         onClick={() => onBuyNow(product, buyNowBtnRef.current, selectedVariant)}
-                                        className="flex-1 bg-black text-white border-2 border-black font-bold text-lg py-4 px-8 rounded-xl shadow-lg hover:shadow-gray-400 transition-all transform hover:-translate-y-1 hover:bg-gray-800"
+                                        className="w-full bg-white text-black font-bold text-xs uppercase tracking-[0.3em] py-5 px-8 transition-all duration-300 hover:bg-black hover:text-white border border-black"
                                     >
                                         Comprar Ahora
                                     </button>
@@ -273,14 +270,14 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ product, currency
                             </div>
                             
                             {/* Value Props */}
-                            <div className="grid grid-cols-2 gap-4 pt-6 border-t border-gray-100 text-sm text-gray-600">
-                                <div className="flex items-center gap-2">
-                                    <TruckIcon className="text-fuchsia-500" />
-                                    <span>Envío rápido 24/48h</span>
+                            <div className="flex gap-12 pt-8 border-t border-gray-100 text-[10px] font-bold uppercase tracking-widest text-gray-400">
+                                <div className="flex items-center gap-3">
+                                    <TruckIcon className="w-4 h-4" />
+                                    <span>Envío Express</span>
                                 </div>
-                                <div className="flex items-center gap-2">
-                                    <SparklesIcon className="text-fuchsia-500" />
-                                    <span>Garantía de calidad</span>
+                                <div className="flex items-center gap-3">
+                                    <SparklesIcon className="w-4 h-4" />
+                                    <span>Garantía Vella</span>
                                 </div>
                             </div>
                         </div>
@@ -290,48 +287,41 @@ const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ product, currency
 
             {/* How To Use Section */}
             {product.howToUse && (
-                <div className="mt-12 bg-white rounded-3xl p-8 shadow-sm border border-gray-100">
-                    <h2 className="text-2xl font-bold text-gray-900 mb-4">Modo de Uso</h2>
-                    <p className="text-gray-700 text-lg leading-relaxed">{product.howToUse}</p>
+                <div className="mt-24 border-t border-gray-100 pt-16 max-w-3xl">
+                    <h2 className="text-xs font-bold text-black mb-8 uppercase tracking-[0.3em]">Modo de Uso</h2>
+                    <p className="text-gray-600 text-lg leading-relaxed font-serif italic">{product.howToUse}</p>
                 </div>
             )}
 
             {/* Reviews Mockup */}
-            <div className="mt-12 bg-white rounded-3xl p-8 shadow-sm border border-gray-100">
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">Opiniones de Clientes ({product.reviewCount})</h2>
-                <div className="space-y-6">
-                    <div className="border-b border-gray-100 pb-6">
-                        <div className="flex items-center justify-between mb-2">
-                            <div className="flex items-center gap-2">
-                                <div className="w-8 h-8 rounded-full bg-fuchsia-100 flex items-center justify-center">
-                                    <UserIcon />
-                                </div>
-                                <span className="font-semibold text-gray-900">María G.</span>
-                            </div>
-                            <div className="flex text-amber-400"><StarIcon className="w-4 h-4"/><StarIcon className="w-4 h-4"/><StarIcon className="w-4 h-4"/><StarIcon className="w-4 h-4"/><StarIcon className="w-4 h-4"/></div>
+            <div className="mt-24 border-t border-gray-100 pt-16">
+                <div className="flex justify-between items-baseline mb-12">
+                    <h2 className="text-xs font-bold text-black uppercase tracking-[0.3em]">Reseñas ({product.reviewCount})</h2>
+                    <button className="text-[10px] font-bold uppercase tracking-widest border-b border-black pb-1">Escribir opinión</button>
+                </div>
+                <div className="grid md:grid-cols-2 gap-16">
+                    <div className="pb-8">
+                        <div className="flex items-center justify-between mb-4">
+                            <span className="text-[10px] font-bold uppercase tracking-widest text-black">María G.</span>
+                            <div className="flex text-black"><StarIcon className="w-2.5 h-2.5"/><StarIcon className="w-2.5 h-2.5"/><StarIcon className="w-2.5 h-2.5"/><StarIcon className="w-2.5 h-2.5"/><StarIcon className="w-2.5 h-2.5"/></div>
                         </div>
-                        <p className="text-gray-600">"¡Me encanta este producto! La calidad es increíble y el envío fue super rápido. Definitivamente volveré a comprar."</p>
+                        <p className="text-gray-500 text-sm leading-relaxed font-sans font-light">"¡Me encanta este producto! La calidad es increíble y el envío fue super rápido. Definitivamente volveré a comprar."</p>
                     </div>
-                     <div className="border-b border-gray-100 pb-6">
-                        <div className="flex items-center justify-between mb-2">
-                            <div className="flex items-center gap-2">
-                                <div className="w-8 h-8 rounded-full bg-fuchsia-100 flex items-center justify-center">
-                                    <UserIcon />
-                                </div>
-                                <span className="font-semibold text-gray-900">Laura P.</span>
-                            </div>
-                            <div className="flex text-amber-400"><StarIcon className="w-4 h-4"/><StarIcon className="w-4 h-4"/><StarIcon className="w-4 h-4"/><StarIcon className="w-4 h-4"/><StarIcon className="w-4 h-4 text-gray-300"/></div>
+                     <div className="pb-8">
+                        <div className="flex items-center justify-between mb-4">
+                            <span className="text-[10px] font-bold uppercase tracking-widest text-black">Laura P.</span>
+                            <div className="flex text-black"><StarIcon className="w-2.5 h-2.5"/><StarIcon className="w-2.5 h-2.5"/><StarIcon className="w-2.5 h-2.5"/><StarIcon className="w-2.5 h-2.5"/><StarIcon className="w-2.5 h-2.5 text-gray-200"/></div>
                         </div>
-                        <p className="text-gray-600">"Muy buen producto, cumple con lo que promete. El packaging es precioso."</p>
+                        <p className="text-gray-500 text-sm leading-relaxed font-sans font-light">"Muy buen producto, cumple con lo que promete. El packaging es precioso."</p>
                     </div>
                 </div>
             </div>
 
             {/* Related Products */}
             {relatedProducts.length > 0 && (
-                <div className="mt-16">
-                    <h2 className="text-2xl font-extrabold text-gray-900 mb-8">También te podría gustar</h2>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="mt-32 border-t border-gray-100 pt-24">
+                    <h2 className="text-2xl font-serif font-bold text-black mb-12 text-center">También te podría gustar</h2>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
                         {relatedProducts.map(related => (
                             <ProductCard
                                 key={related.id}

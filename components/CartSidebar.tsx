@@ -107,9 +107,9 @@ const CartSidebar: React.FC<CartSidebarProps> = ({ isOpen, onClose, cartItems, c
                 className={`fixed top-0 right-0 h-full w-full max-w-md bg-white shadow-2xl flex flex-col transition-transform duration-300 ease-in-out transform ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
             >
                 {/* Header */}
-                <div className="flex items-center justify-between p-4 border-b flex-shrink-0 bg-fuchsia-50/70">
-                    <h2 id="cart-heading" className="text-xl font-bold tracking-wide text-[var(--color-primary-solid)]">Tu Cesta</h2>
-                    <button onClick={onClose} className="p-2 rounded-full hover:bg-white text-fuchsia-800 transition-colors" aria-label="Cerrar carrito">
+                <div className="flex items-center justify-between p-8 border-b border-gray-100 flex-shrink-0 bg-white">
+                    <h2 id="cart-heading" className="text-xl font-serif font-bold tracking-tight text-black uppercase text-xs">Tu Selección</h2>
+                    <button onClick={onClose} className="p-2 text-black hover:opacity-50 transition-opacity" aria-label="Cerrar carrito">
                         <CloseIcon />
                     </button>
                 </div>
@@ -117,43 +117,47 @@ const CartSidebar: React.FC<CartSidebarProps> = ({ isOpen, onClose, cartItems, c
                 {cartItems.length > 0 ? (
                     <>
                         {/* Items List */}
-                        <div className="flex-grow overflow-y-auto p-4 space-y-4 bg-gray-50/40">
+                        <div className="flex-grow overflow-y-auto p-8 space-y-8 bg-white">
                             {/* Free Gift Item Logic */}
                             {hasGift && (
-                                <div className="flex gap-4 items-center bg-black text-white p-3 rounded-xl border border-gray-800 shadow-sm transition-shadow animate-pop">
-                                    <div className="w-20 h-20 flex items-center justify-center bg-white rounded-lg border border-gray-200 p-1">
+                                <div className="flex gap-6 items-center bg-black text-white p-6 border border-black shadow-sm transition-shadow animate-pop">
+                                    <div className="w-20 h-24 flex items-center justify-center bg-white p-2">
                                         <GiftBoxIcon color="black" />
                                     </div>
                                     <div className="flex-grow flex flex-col">
-                                        <h3 className="font-semibold text-sm leading-tight text-white">Caja de Regalo Mediana (Negra)</h3>
-                                        <p className="text-xs text-gray-400 mt-1">¡Regalo BLACK FRIDAY (+35€)!</p>
-                                        <div className="flex items-center justify-between mt-2">
-                                             <p className="font-bold text-base text-green-400">GRATIS</p>
+                                        <h3 className="font-serif font-bold text-sm leading-tight text-white uppercase tracking-wide">Caja de Regalo Mediana</h3>
+                                        <p className="text-[10px] text-gray-400 mt-2 uppercase tracking-widest">Obsequio Exclusivo</p>
+                                        <div className="flex items-center justify-between mt-4">
+                                             <p className="font-bold text-[10px] tracking-widest text-[var(--color-accent)] uppercase">Cortesía</p>
                                         </div>
                                     </div>
                                 </div>
                             )}
 
                             {cartItems.map(item => (
-                                <div key={item.id} className="flex gap-4 items-start bg-white p-3 rounded-xl border border-fuchsia-100 shadow-sm hover:shadow-md transition-shadow">
-                                    <img src={item.product.imageUrl} alt={item.product.name} className="w-20 h-20 object-contain rounded-lg border border-gray-50 p-1 bg-white" />
+                                <div key={item.id} className="flex gap-6 items-start bg-white border-b border-gray-50 pb-8 last:border-0">
+                                    <div className="w-24 h-32 bg-gray-50 flex-shrink-0 overflow-hidden">
+                                        <img src={item.product.imageUrl} alt={item.product.name} className="w-full h-full object-cover" />
+                                    </div>
                                     <div className="flex-grow flex flex-col">
-                                        <h3 className="font-semibold text-sm leading-tight text-gray-900">{item.product.name}</h3>
-                                        {item.selectedVariant && (
-                                            <p className="text-xs text-gray-500 mt-1">
-                                                {Object.entries(item.selectedVariant).map(([key, value]) => `${key}: ${value}`).join(', ')}
-                                            </p>
-                                        )}
-                                        <div className="flex items-center justify-between mt-3">
-                                             <p className="font-bold text-base text-[var(--color-primary-solid)]">{formatCurrency(item.product.price * item.quantity, currency)}</p>
-                                             <button onClick={() => onRemoveItem(item.id)} className="text-gray-400 hover:text-red-500 p-1 transition-colors" aria-label={`Eliminar ${item.product.name}`}>
+                                        <div className="flex justify-between items-start">
+                                            <h3 className="font-serif font-bold text-sm leading-tight text-black uppercase tracking-wide">{item.product.name}</h3>
+                                            <button onClick={() => onRemoveItem(item.id)} className="text-gray-300 hover:text-black p-1 transition-colors" aria-label={`Eliminar ${item.product.name}`}>
                                                 <TrashIcon />
                                             </button>
                                         </div>
-                                        <div className="flex items-center border border-gray-200 rounded-lg w-fit mt-2 bg-white overflow-hidden">
-                                            <button onClick={() => onUpdateQuantity(item.id, item.quantity - 1)} className="px-3 py-1 font-semibold text-gray-600 hover:text-[var(--color-primary-solid)] hover:bg-fuchsia-50 transition-colors" aria-label="Reducir cantidad">-</button>
-                                            <span className="px-2 text-sm font-medium text-gray-800">{item.quantity}</span>
-                                            <button onClick={() => onUpdateQuantity(item.id, item.quantity + 1)} className="px-3 py-1 font-semibold text-gray-600 hover:text-[var(--color-primary-solid)] hover:bg-fuchsia-50 transition-colors" aria-label="Aumentar cantidad">+</button>
+                                        {item.selectedVariant && (
+                                            <p className="text-[10px] text-gray-400 mt-2 uppercase tracking-widest">
+                                                {Object.entries(item.selectedVariant).map(([key, value]) => `${key}: ${value}`).join(' | ')}
+                                            </p>
+                                        )}
+                                        <div className="flex items-center justify-between mt-6">
+                                             <p className="font-sans font-medium text-sm text-black">{formatCurrency(item.product.price * item.quantity, currency)}</p>
+                                             <div className="flex items-center border border-gray-100 bg-white">
+                                                <button onClick={() => onUpdateQuantity(item.id, item.quantity - 1)} className="px-3 py-1 text-xs text-gray-400 hover:text-black transition-colors" aria-label="Reducir cantidad">-</button>
+                                                <span className="px-2 text-[10px] font-bold text-black">{item.quantity}</span>
+                                                <button onClick={() => onUpdateQuantity(item.id, item.quantity + 1)} className="px-3 py-1 text-xs text-gray-400 hover:text-black transition-colors" aria-label="Aumentar cantidad">+</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -161,73 +165,72 @@ const CartSidebar: React.FC<CartSidebarProps> = ({ isOpen, onClose, cartItems, c
                         </div>
 
                         {/* Footer / Summary */}
-                        <div className="p-6 border-t bg-white space-y-4 shadow-[0_-4px_20px_rgba(0,0,0,0.05)] z-10">
+                        <div className="p-8 border-t border-gray-100 bg-white space-y-6 z-10">
                              {/* Promo Messages */}
                              {discountAmount > 0 ? (
-                                <div className="text-center text-sm font-semibold text-[var(--color-primary-solid)] p-3 bg-fuchsia-50 rounded-xl border border-fuchsia-100 flex items-center justify-center gap-2">
-                                    <span>🎉</span>
-                                    <span>¡Felicidades! <b>15% de descuento</b> aplicado.</span>
+                                <div className="text-center text-[10px] font-bold text-black p-4 bg-gray-50 uppercase tracking-[0.2em] flex items-center justify-center gap-3">
+                                    <span>Beneficio Premium: 15% Descuento Aplicado</span>
                                 </div>
                             ) : amountForFreeShipping > 0 ? (
-                                <div className="text-center text-sm">
-                                    <p className="text-gray-600 mb-2"><span className="font-bold text-black">BLACK FRIDAY:</span> Te faltan <span className="font-bold text-[var(--color-primary-solid)]">{formatCurrency(amountForFreeShipping, currency, { decimals: 2 })}</span> para envío <b>GRATIS</b>.</p>
-                                    <div className="w-full bg-gray-100 rounded-full h-2.5 overflow-hidden">
-                                        <div className="bg-gradient-to-r from-fuchsia-300 to-[var(--color-primary-solid)] h-full rounded-full transition-all duration-500 ease-out" style={{ width: `${Math.min((subtotal / FREE_SHIPPING_THRESHOLD) * 100, 100)}%` }}></div>
+                                <div className="text-center">
+                                    <p className="text-[10px] text-gray-400 uppercase tracking-widest mb-4">Faltan <span className="text-black font-bold">{formatCurrency(amountForFreeShipping, currency, { decimals: 2 })}</span> para Envío de Cortesía</p>
+                                    <div className="w-full bg-gray-50 h-1 overflow-hidden">
+                                        <div className="bg-black h-full transition-all duration-700 ease-out" style={{ width: `${Math.min((subtotal / FREE_SHIPPING_THRESHOLD) * 100, 100)}%` }}></div>
                                     </div>
                                 </div>
                             ) : (
-                                <div className="text-center text-sm font-semibold text-green-700 p-3 bg-green-50 rounded-xl border border-green-100 flex items-center justify-center gap-2">
-                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7"></path></svg>
-                                    <span>¡BLACK FRIDAY: Envío GRATIS activado!</span>
+                                <div className="text-center text-[10px] font-bold text-black p-4 bg-gray-50 uppercase tracking-[0.2em] flex items-center justify-center gap-3">
+                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7"></path></svg>
+                                    <span>Envío de Cortesía Activado</span>
                                 </div>
                             )}
 
-                            <div className="space-y-2 text-sm text-gray-700 pt-2">
+                            <div className="space-y-3 text-[10px] font-bold uppercase tracking-widest text-gray-400 pt-2">
                                 <div className="flex justify-between">
                                     <span>Subtotal</span>
-                                    <span className="font-semibold">{formatCurrency(subtotal, currency)}</span>
+                                    <span className="text-black">{formatCurrency(subtotal, currency)}</span>
                                 </div>
                                 {discountAmount > 0 && (
-                                     <div className="flex justify-between text-fuchsia-600 bg-fuchsia-50 text-[var(--color-primary-solid)]">
-                                        <span>Descuento (15%)</span>
-                                        <span className="font-semibold">-{formatCurrency(discountAmount, currency)}</span>
+                                     <div className="flex justify-between text-black">
+                                        <span>Descuento Especial (15%)</span>
+                                        <span className="font-bold">-{formatCurrency(discountAmount, currency)}</span>
                                     </div>
                                 )}
                                 <div className="flex justify-between">
-                                    <span>Envío</span>
-                                    <span className={`font-semibold ${shippingCost === 0 ? 'text-green-600' : ''}`}>{shippingCost === 0 ? 'Gratis' : formatCurrency(shippingCost, currency)}</span>
+                                    <span>Gastos de Envío</span>
+                                    <span className={`font-bold ${shippingCost === 0 ? 'text-black' : ''}`}>{shippingCost === 0 ? 'Cortesía' : formatCurrency(shippingCost, currency)}</span>
                                 </div>
                             </div>
-                            <div className="flex justify-between items-end font-bold text-xl pt-3 border-t border-gray-100 text-gray-900">
-                                <span>Total</span>
-                                <span className="text-3xl text-[var(--color-primary-solid)] tracking-tight">{formatCurrency(total, currency)}</span>
+                            <div className="flex justify-between items-baseline pt-6 border-t border-gray-100 text-black">
+                                <span className="text-xs font-bold uppercase tracking-[0.3em]">Total</span>
+                                <span className="text-3xl font-sans font-medium">{formatCurrency(total, currency)}</span>
                             </div>
                             
-                            <div className="flex flex-col gap-3 pt-2">
+                            <div className="flex flex-col gap-4 pt-4">
                                 {/* MAIN CHECKOUT BUTTON: GO TO SUMMARY */}
                                 <button 
                                     onClick={handleGoToSummary}
-                                    className="w-full text-center bg-[var(--color-primary)] text-black hover:bg-white hover:text-[var(--color-primary-solid)] border-2 border-[var(--color-primary-solid)] font-bold py-4 px-6 rounded-xl transition-all shadow-lg hover:shadow-fuchsia-200 transform hover:-translate-y-0.5 flex justify-center items-center cursor-pointer no-underline"
+                                    className="w-full bg-black text-white font-bold text-xs uppercase tracking-[0.3em] py-5 px-8 transition-all duration-300 hover:bg-white hover:text-black border border-black"
                                 >
-                                     VER RESUMEN / PAGAR
+                                     Finalizar Pedido
                                 </button>
                             </div>
                         </div>
                     </>
                 ) : (
-                    <div className="flex-grow flex flex-col items-center justify-center p-8 text-center bg-gray-50/30">
-                        <div className="bg-fuchsia-50 p-6 rounded-full mb-4">
-                            <svg className="h-12 w-12 text-fuchsia-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                    <div className="flex-grow flex flex-col items-center justify-center p-12 text-center bg-white">
+                        <div className="mb-8 opacity-20">
+                            <svg className="h-16 w-16 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                             </svg>
                         </div>
-                        <p className="text-xl font-bold text-gray-800 mb-2">Tu cesta está vacía</p>
-                        <p className="text-gray-500 mb-8">¡Añade productos para comenzar tu pedido!</p>
+                        <p className="text-xl font-serif italic text-black mb-4">Su selección está vacía</p>
+                        <p className="text-[10px] text-gray-400 uppercase tracking-widest mb-12">Descubra nuestras colecciones exclusivas</p>
                         <button 
                             onClick={onClose}
-                            className="bg-black text-white px-8 py-3 rounded-full font-bold hover:bg-gray-800 transition-colors shadow-lg"
+                            className="bg-black text-white px-10 py-4 text-xs font-bold uppercase tracking-[0.3em] hover:bg-gray-800 transition-colors"
                         >
-                            Seguir comprando
+                            Explorar Tienda
                         </button>
                     </div>
                 )}

@@ -74,25 +74,25 @@ const FooterLink: React.FC<{ onClick: () => void; children: React.ReactNode }> =
 
 const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
     return (
-        <footer className="bg-black border-t border-gray-800 text-white font-sans">
-            <div className="container mx-auto px-6 py-16">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 text-center md:text-left">
-                    <div className="sm:col-span-2 lg:col-span-1 flex flex-col items-center text-center md:items-center md:text-center">
+        <footer className="bg-black border-t border-neutral-900 text-white font-sans">
+            <div className="container mx-auto px-6 py-24">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-16 text-center md:text-left">
+                    <div className="sm:col-span-2 lg:col-span-1 flex flex-col items-center text-center md:items-start md:text-left">
                          <button 
                              onClick={() => onNavigate('home')}
-                             className="inline-block hover:opacity-80 transition-opacity mb-4 cursor-pointer bg-transparent border-none p-0"
+                             className="inline-block hover:opacity-80 transition-opacity mb-8 cursor-pointer bg-transparent border-none p-0"
                          >
-                             <img src="https://i0.wp.com/vellaperfumeria.com/wp-content/uploads/2025/06/1000003724-removebg-preview.png" alt="Vellaperfumeria Logo" className="h-36 w-auto mx-auto" />
+                             <img src="https://i0.wp.com/vellaperfumeria.com/wp-content/uploads/2025/06/1000003724-removebg-preview.png" alt="Vellaperfumeria Logo" className="h-24 w-auto brightness-0 invert" />
                          </button>
-                        <h2 className="text-xl font-bold tracking-wider text-white">Vellaperfumeria</h2>
-                        <p className="text-gray-400 text-sm mt-2">
-                            Tu esencia, tu belleza, tu tienda.
+                        <h2 className="text-2xl font-serif font-light tracking-[0.2em] text-white mb-6 uppercase">Vella Perfumería</h2>
+                        <p className="text-neutral-500 text-xs leading-relaxed max-w-xs uppercase tracking-widest">
+                            La excelencia en perfumería y cosmética. Tu destino de belleza exclusivo.
                         </p>
                     </div>
 
                     <div>
-                        <h3 className="text-base font-bold tracking-widest uppercase mb-4 text-white">Navegación</h3>
-                        <ul className="space-y-2 text-sm">
+                        <h3 className="text-[10px] font-sans font-bold tracking-[0.3em] uppercase mb-10 text-neutral-400">Navegación</h3>
+                        <ul className="space-y-5 text-[10px] tracking-[0.2em] uppercase font-medium">
                            <FooterLink onClick={() => onNavigate('home')}>Inicio</FooterLink>
                            <FooterLink onClick={() => onNavigate('products', 'all')}>Tienda</FooterLink>
                            <FooterLink onClick={() => onNavigate('products', 'skincare')}>Cuidado Facial</FooterLink>
@@ -107,25 +107,25 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                     </div>
 
                      <div>
-                        <h3 className="text-base font-bold tracking-widest uppercase mb-4 text-white">Ayuda</h3>
-                        <ul className="space-y-2 text-sm">
+                        <h3 className="text-[10px] font-sans font-bold tracking-[0.3em] uppercase mb-10 text-neutral-400">Ayuda</h3>
+                        <ul className="space-y-5 text-[10px] tracking-[0.2em] uppercase font-medium">
                             <FooterLink onClick={() => onNavigate('about')}>Sobre Nosotros</FooterLink>
                             <FooterLink onClick={() => onNavigate('contact')}>Contacto</FooterLink>
                             <FooterLink onClick={() => onNavigate('blog')}>Blog</FooterLink>
-                            <li className="text-gray-500">Política de Privacidad</li>
+                            <li className="text-neutral-600 cursor-default">Privacidad</li>
                         </ul>
                     </div>
 
                      <div>
-                        <h3 className="text-base font-bold tracking-widest uppercase mb-4 text-white">Síguenos</h3>
-                        <div className="flex justify-center md:justify-start space-x-4 text-white mb-6">
-                           <span className="cursor-pointer hover:opacity-80 transition-all duration-300 transform hover:scale-110" aria-label="Threads"><ThreadsIcon /></span>
-                           <span className="cursor-pointer hover:opacity-80 transition-all duration-300 transform hover:scale-110" aria-label="Instagram"><InstagramIcon /></span>
-                           <span className="cursor-pointer hover:opacity-80 transition-all duration-300 transform hover:scale-110" aria-label="Facebook"><FacebookIcon /></span>
+                        <h3 className="text-[10px] font-sans font-bold tracking-[0.3em] uppercase mb-10 text-neutral-400">Síguenos</h3>
+                        <div className="flex justify-center md:justify-start space-x-8 text-white mb-12">
+                           <span className="cursor-pointer hover:text-neutral-400 transition-all duration-300 transform hover:scale-110" aria-label="Threads"><ThreadsIcon /></span>
+                           <span className="cursor-pointer hover:text-neutral-400 transition-all duration-300 transform hover:scale-110" aria-label="Instagram"><InstagramIcon /></span>
+                           <span className="cursor-pointer hover:text-neutral-400 transition-all duration-300 transform hover:scale-110" aria-label="Facebook"><FacebookIcon /></span>
                         </div>
                         
-                        <h3 className="text-base font-bold tracking-widest uppercase mb-4 text-white">Métodos de Pago</h3>
-                        <div className="flex justify-center md:justify-start space-x-2">
+                        <h3 className="text-[10px] font-sans font-bold tracking-[0.3em] uppercase mb-8 text-neutral-400">Pagos Seguros</h3>
+                        <div className="flex justify-center md:justify-start space-x-4 grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-700">
                             <VisaIcon />
                             <MastercardIcon />
                             <PayPalIcon />
@@ -133,9 +133,9 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                     </div>
                 </div>
             </div>
-            <div className="bg-black border-t border-gray-800 py-6 text-center text-sm text-gray-500">
+            <div className="bg-black border-t border-neutral-900 py-10 text-center text-[9px] text-neutral-600 tracking-[0.2em] uppercase">
                 <div className="container mx-auto px-4">
-                    <p>&copy; {new Date().getFullYear()} Vellaperfumeria. Todos los derechos reservados.</p>
+                    <p>&copy; {new Date().getFullYear()} Vella Perfumería. Todos los derechos reservados.</p>
                 </div>
             </div>
         </footer>
