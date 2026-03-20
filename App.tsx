@@ -1,6 +1,5 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
-import ReactDOM from 'react-dom/client';
 // Types
 import type { View, Product, CartItem } from './components/types';
 import type { Currency } from './components/currency';
@@ -351,8 +350,10 @@ const App: React.FC = () => {
         return crumbs;
     };
 
+    const isCheckoutMode = view.current === 'checkoutSummary';
+
     return (
-        <div className="flex flex-col min-h-screen bg-white font-sans text-gray-800 relative">
+        <div className={`flex flex-col min-h-screen bg-white font-sans text-gray-800 relative ${isCheckoutMode ? 'checkout-mode' : ''}`}>
 
             {isLoadingCart && (
                 <div className="fixed top-0 left-0 w-full h-[2px] bg-neutral-100 z-[100]">
@@ -367,29 +368,33 @@ const App: React.FC = () => {
                 </div>
             )}
 
-            <a 
-                href="https://api.whatsapp.com/send?phone=34661202616&text=Hola,%20tengo%20una%20consulta%20sobre%20mi%20pedido%20en%20Vella%20Perfumería."
-                target="_blank"
-                rel="noopener noreferrer"
-                className="fixed bottom-24 md:bottom-10 right-6 z-[100] bg-black hover:bg-neutral-800 text-white p-4 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 flex items-center justify-center gap-3 group border border-white/10"
-                aria-label="Chat de WhatsApp"
-            >
-                <WhatsAppFloatIcon />
-                <span className="max-w-0 overflow-hidden group-hover:max-w-xs group-hover:ml-2 font-sans font-bold text-[10px] uppercase tracking-widest transition-all duration-500 ease-in-out whitespace-nowrap">Asesoría Personalizada</span>
-            </a>
+            {!isCheckoutMode && (
+                <a 
+                    href="https://api.whatsapp.com/send?phone=34661202616&text=Hola,%20tengo%20una%20consulta%20sobre%20mi%20pedido%20en%20Vella%20Perfumería."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="fixed bottom-24 md:bottom-10 right-6 z-[100] bg-black hover:bg-neutral-800 text-white p-4 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 flex items-center justify-center gap-3 group border border-white/10"
+                    aria-label="Chat de WhatsApp"
+                >
+                    <WhatsAppFloatIcon />
+                    <span className="max-w-0 overflow-hidden group-hover:max-w-xs group-hover:ml-2 font-sans font-bold text-[10px] uppercase tracking-widest transition-all duration-500 ease-in-out whitespace-nowrap">Asesoría Personalizada</span>
+                </a>
+            )}
             
-            <Header
-                onNavigate={handleNavigate}
-                currency={currency}
-                onCurrencyChange={setCurrency}
-                cartCount={cartItems.reduce((acc, item) => acc + item.quantity, 0)}
-                onCartClick={() => setIsCartOpen(true)}
-            />
-             <main className="flex-grow py-8 mb-20 md:mb-0">
-                <Breadcrumbs items={buildBreadcrumbs()} />
+            {!isCheckoutMode && (
+                <Header
+                    onNavigate={handleNavigate}
+                    currency={currency}
+                    onCurrencyChange={setCurrency}
+                    cartCount={cartItems.reduce((acc, item) => acc + item.quantity, 0)}
+                    onCartClick={() => setIsCartOpen(true)}
+                />
+            )}
+             <main className={`flex-grow ${isCheckoutMode ? 'py-0' : 'py-8'} mb-20 md:mb-0`}>
+                {!isCheckoutMode && <Breadcrumbs items={buildBreadcrumbs()} />}
                 {renderContent()}
             </main>
-            <Footer onNavigate={handleNavigate} />
+            {!isCheckoutMode && <Footer onNavigate={handleNavigate} />}
 
             <CartSidebar
                 isOpen={isCartOpen}
@@ -405,7 +410,30 @@ const App: React.FC = () => {
                 onClearCart={() => setCartItems([])} 
             />
 
-            <BottomNavBar onNavigate={handleNavigate} currentView={view.current} />
+            {!isCheckoutMode && <BottomNavBar onNavigate={handleNavigate} currentView={view.current} />}
+
+            {/* Botón de Información Técnica (Solo para depuración) */}
+            <div className="fixed bottom-4 left-4 z-[100] opacity-10 hover:opacity-100 transition-opacity">
+                <button 
+                    onClick={() => {
+                        console.log({
+                            api: 'WooCommerce',
+                            origin: window.location.origin,
+                            session: vParam,
+                            cartItems: cartItems.length
+                        });
+                        // Simple visual feedback since alert is discouraged
+                        const toast = document.createElement('div');
+                        toast.className = 'fixed bottom-20 left-4 bg-black text-white text-[10px] p-3 rounded shadow-2xl z-[200] animate-bounce';
+                        toast.innerText = `API: OK | Origin: ${window.location.origin.substring(0, 20)}...`;
+                        document.body.appendChild(toast);
+                        setTimeout(() => toast.remove(), 3000);
+                    }}
+                    className="bg-black text-white text-[8px] p-2 rounded uppercase tracking-widest font-bold border border-white/20"
+                >
+                    Tech Info
+                </button>
+            </div>
 
             {quickViewProduct && (
                 <QuickViewModal

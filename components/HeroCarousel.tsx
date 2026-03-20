@@ -47,67 +47,66 @@ const ChevronRightIcon = () => (
 
 
 const HeroCarousel: React.FC<HeroCarouselProps> = ({ onNavigate }) => {
-    const [currentIndex, setCurrentIndex] = useState(0);
-
-    const nextSlide = useCallback(() => {
-        setCurrentIndex(prevIndex => (prevIndex === slides.length - 1 ? 0 : prevIndex + 1));
-    }, []);
-
-    const prevSlide = () => {
-        setCurrentIndex(prevIndex => (prevIndex === 0 ? slides.length - 1 : prevIndex - 1));
-    };
-
-    useEffect(() => {
-        const slideInterval = setInterval(nextSlide, 6000);
-        return () => clearInterval(slideInterval);
-    }, [nextSlide]);
-    
     return (
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-             <div className="w-full h-[70vh] max-h-[600px] m-auto relative group overflow-hidden bg-black">
-                {slides.map((slide, index) => (
-                    <div
-                        key={index}
-                        className={`absolute top-0 left-0 w-full h-full bg-cover bg-center transition-all duration-1000 ease-in-out ${index === currentIndex ? 'opacity-100 scale-100' : 'opacity-0 scale-105'}`}
-                        style={{ backgroundImage: `url(${slide.imageUrl})` }}
-                    >
-                        <div className="absolute inset-0 bg-black/30 flex flex-col items-center justify-center text-center text-white p-8">
-                            <div className="max-w-3xl space-y-6">
-                                <p className="text-xs lg:text-sm font-sans font-bold uppercase tracking-[0.4em] mb-2 animate-fadeIn">{slide.title}</p>
-                                <h2 className="text-4xl lg:text-6xl font-serif font-bold mb-8 tracking-tight leading-tight drop-shadow-xl animate-slideUp">{slide.subtitle}</h2>
-                                <div className="w-12 h-px bg-white mx-auto mb-10"></div>
-                                <button
-                                    onClick={() => onNavigate(slide.view, slide.payload)}
-                                    className="bg-white text-black font-sans font-bold py-4 px-12 rounded-none hover:bg-[var(--color-accent)] hover:text-white transition-all duration-500 uppercase text-[10px] tracking-[0.25em] shadow-2xl"
-                                >
-                                    {slide.buttonText}
-                                </button>
-                            </div>
-                        </div>
+        <section className="relative w-full h-[65vh] md:h-[92vh] overflow-hidden bg-white">
+            <div className="absolute inset-0">
+                <img 
+                    alt="Vella Boutique Luxe Editorial" 
+                    className="w-full h-full object-cover object-[85%_center] transition-transform duration-[30s] scale-105 animate-slow-zoom" 
+                    referrerPolicy="no-referrer" 
+                    src="https://vellaperfumeria.com/wp-content/uploads/2025/12/crear-una-imagen-de-el-cosmetico-de-oriflame-para-pelo-2.png" 
+                />
+                <div className="absolute inset-0 bg-black/5 pointer-events-none"></div>
+            </div>
+            <div className="relative h-full w-full flex items-center justify-start px-6 md:px-12 lg:px-24">
+                <div className="bg-white/[0.01] backdrop-blur-[8px] border border-white/10 p-8 md:p-14 lg:p-20 rounded-[3rem] md:rounded-[5rem] shadow-[0_20px_60px_rgba(0,0,0,0.05)] max-w-sm md:max-w-lg w-full text-center space-y-8 animate-slide-in-left">
+                    <div className="space-y-4 md:space-y-6">
+                        <span className="text-white text-[9px] md:text-[13px] font-black uppercase tracking-[1.2em] block drop-shadow-xl opacity-90">ONIN LUXE 2026</span>
+                        <div className="inline-block bg-pink-500 text-white text-[12px] md:text-[14px] font-black px-6 py-2 rounded-full tracking-[0.2em] animate-bounce shadow-lg">OFERTAS HASTA EL 27 DE MARZO</div>
+                        <h1 className="text-5xl md:text-8xl lg:text-[9.5rem] font-serif italic text-white uppercase tracking-tighter leading-none drop-shadow-[0_10px_30px_rgba(0,0,0,0.3)] cursor-pointer hover:text-[#E7B5D5] transition-colors">
+                            TU <span className="text-[#E7B5D5]">TONO</span>
+                        </h1>
+                        <div className="w-24 h-0.5 bg-[#E7B5D5] mx-auto opacity-40"></div>
+                        <p className="text-white/95 text-[8px] md:text-[11px] font-bold uppercase tracking-[0.7em] max-w-md mx-auto leading-relaxed pt-2 italic drop-shadow-lg">
+                            FRAGANCIAS DE AUTOR Y <br />ALTA COSMÉTICA CIENTÍFICA
+                        </p>
                     </div>
-                ))}
-                
-                {/* Navigation Buttons */}
-                <button onClick={prevSlide} className="absolute left-8 top-1/2 -translate-y-1/2 z-10 bg-white/10 hover:bg-white/90 p-4 text-white hover:text-black transition-all duration-300 backdrop-blur-sm opacity-0 group-hover:opacity-100" aria-label="Anterior">
-                    <ChevronLeftIcon />
-                </button>
-                <button onClick={nextSlide} className="absolute right-8 top-1/2 -translate-y-1/2 z-10 bg-white/10 hover:bg-white/90 p-4 text-white hover:text-black transition-all duration-300 backdrop-blur-sm opacity-0 group-hover:opacity-100" aria-label="Siguiente">
-                    <ChevronRightIcon />
-                </button>
-
-                {/* Dots */}
-                <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex space-x-4">
-                    {slides.map((_, index) => (
-                        <button
-                            key={index}
-                            onClick={() => setCurrentIndex(index)}
-                            className={`h-0.5 transition-all duration-500 ${index === currentIndex ? 'w-12 bg-white' : 'w-6 bg-white/30 hover:bg-white/60'}`}
-                            aria-label={`Ir a diapositiva ${index + 1}`}
-                        />
-                    ))}
+                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                        <button 
+                            onClick={() => onNavigate('products', 'all')}
+                            className="bg-white/90 text-black px-12 md:px-16 py-4 md:py-6 text-[10px] md:text-[12px] font-black uppercase tracking-[0.8em] hover:bg-[#E7B5D5] hover:text-white transition-all shadow-[0_20px_40px_rgba(0,0,0,0.2)] inline-block transform hover:scale-105 active:scale-95 rounded-none backdrop-blur-md"
+                        >
+                            EXPLORAR
+                        </button>
+                        <button 
+                            onClick={() => onNavigate('ia')}
+                            className="bg-black/80 text-white px-12 md:px-16 py-4 md:py-6 text-[10px] md:text-[12px] font-black uppercase tracking-[0.8em] hover:bg-white hover:text-black transition-all shadow-[0_20px_40px_rgba(0,0,0,0.2)] inline-block transform hover:scale-105 active:scale-95 rounded-none backdrop-blur-md border border-white/20"
+                        >
+                            EMPECEMOS
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
+            <div className="absolute bottom-16 right-16 text-white/40 text-[11px] font-black uppercase tracking-[1.8em] vertical-text hidden lg:block select-none">
+                EDITORIAL · 2026 · VELLA BOUTIQUE
+            </div>
+            <style>{`
+                .vertical-text {
+                    writing-mode: vertical-rl;
+                    transform: rotate(180deg);
+                }
+                @keyframes slide-in-left {
+                    from { opacity: 0; transform: translateX(-120px); filter: blur(30px); }
+                    to { opacity: 1; transform: translateX(0); filter: blur(0); }
+                }
+                @keyframes slow-zoom {
+                    from { transform: scale(1); }
+                    to { transform: scale(1.1); }
+                }
+                .animate-slide-in-left { animation: slide-in-left 2.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+                .animate-slow-zoom { animation: slow-zoom 40s ease-in-out infinite alternate; }
+            `}</style>
+        </section>
     );
 };
 

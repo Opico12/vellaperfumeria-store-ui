@@ -58,7 +58,7 @@ interface HeaderProps {
     onCartClick: () => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ onNavigate, currency, onCurrencyChange, cartCount, onCartClick }) => {
+const Header: React.FC<HeaderProps> = ({ onNavigate, cartCount, onCartClick }) => {
     const [cartPulse, setCartPulse] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const navRef = useRef<HTMLDivElement>(null);
@@ -87,103 +87,106 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, currency, onCurrencyChange,
     }
 
     return (
-        <header className="bg-white sticky top-0 z-30 border-b border-gray-100">
+        <header className="sticky top-0 z-50 transition-all duration-500 font-sans shadow-md">
             {/* Top Bar */}
-            <div className="bg-black text-white py-1.5 text-[10px] md:text-xs font-medium tracking-[0.15em] uppercase">
-                <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-                    <div className="hidden md:flex items-center space-x-4">
-                        <span className="cursor-pointer hover:text-[var(--color-accent)] transition-colors" aria-label="Threads"><ThreadsIcon /></span>
-                        <span className="cursor-pointer hover:text-[var(--color-accent)] transition-colors" aria-label="Instagram"><InstagramIcon /></span>
-                        <span className="cursor-pointer hover:text-[var(--color-accent)] transition-colors" aria-label="Facebook"><FacebookIcon /></span>
+            <div className="bg-white text-black text-[10px] sm:text-[11px] font-bold tracking-[0.2em] border-b border-pink-100 text-center uppercase py-2">
+                <div className="container mx-auto px-4 flex items-center justify-center gap-4 md:gap-8 flex-wrap">
+                    <div className="flex items-center gap-2 text-pink-700">
+                        <span className="animate-pulse">✨</span>
+                        <span>OFERTAS HASTA EL 27 DE MARZO</span>
+                        <span className="animate-pulse">✨</span>
                     </div>
-                    <div className="block w-full text-center">
-                        <span className="flex items-center justify-center gap-2">
-                            <span className="font-bold text-[var(--color-accent)]">Venta Exclusiva</span> | Envío de Cortesía +35€
-                        </span>
-                    </div>
-                    <div className="hidden md:flex items-center space-x-4">
-                    </div>
+                    <div className="hidden sm:block h-3 w-[1px] bg-pink-300"></div>
+                    <a href="https://instagram.com/beautieshopvella" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-pink-600 transition-colors">
+                        <div className="bg-white p-1 rounded-full shadow-sm">
+                            <InstagramIcon />
+                        </div>
+                        <span className="hidden sm:inline">@beautieshopvella</span>
+                    </a>
+                    <div className="hidden sm:block h-3 w-[1px] bg-pink-300"></div>
+                    <a href="tel:+34661202616" className="flex items-center gap-2 hover:text-pink-600 transition-colors">
+                        <div className="bg-white p-1 rounded-full shadow-sm">
+                            <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"></path></svg>
+                        </div>
+                        <span>661 202 616</span>
+                    </a>
                 </div>
             </div>
 
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                
-                {/* MOBILE HEADER: Centered Logo, Left Menu, Right Cart */}
-                <div className="md:hidden flex items-center justify-between py-4 relative">
-                    <div className="z-20">
-                        <button onClick={() => setIsMobileMenuOpen(true)} className="text-black p-2">
-                            <MenuIcon />
-                        </button>
-                    </div>
-
-                    {/* Logo Centered Absolute for mobile */}
-                    <div className="absolute inset-0 flex justify-center items-center pointer-events-none">
-                        <button 
-                            onClick={() => onNavigate('home')}
-                            className="pointer-events-auto block cursor-pointer transition-transform hover:scale-105 duration-300 bg-transparent border-none p-0"
-                        >
-                            <img 
-                                src="https://i0.wp.com/vellaperfumeria.com/wp-content/uploads/2025/06/1000003724-removebg-preview.png" 
-                                alt="Vellaperfumeria Logo" 
-                                className="h-20 w-auto object-contain" 
-                            />
-                        </button>
-                    </div>
-
-                    <div className="z-20">
-                        <button 
-                            className={`cart-dest-icon relative p-2 text-black hover:text-[var(--color-accent)] transition-colors ${cartPulse ? 'animate-pop' : ''}`}
-                            onClick={onCartClick}
-                        >
-                            <CartIcon />
-                            {cartCount > 0 && (
-                                <span className="absolute -top-1 -right-1 inline-flex items-center justify-center w-4 h-4 text-[9px] font-bold leading-none text-white bg-black rounded-full border border-white">
-                                    {cartCount}
-                                </span>
-                            )}
-                        </button>
-                    </div>
-                </div>
-
-                {/* DESKTOP HEADER: Stacked Layout - Logo Centered Top, Nav Below */}
-                <div className="hidden md:flex flex-col items-center py-6 relative">
-                    {/* Row 1: Logo Centered */}
-                    <div className="w-full flex justify-center items-center relative mb-6">
-                        <button 
-                            onClick={() => onNavigate('home')}
-                            className="block cursor-pointer transition-transform hover:scale-105 duration-300 bg-transparent border-none p-0"
-                        >
-                            <img 
-                                src="https://i0.wp.com/vellaperfumeria.com/wp-content/uploads/2025/06/1000003724-removebg-preview.png" 
-                                alt="Vellaperfumeria Logo" 
-                                className="h-24 w-auto object-contain" 
-                            />
-                        </button>
-
-                        {/* Cart Icon - Absolute Right in the Logo Row */}
-                        <div className="absolute right-0 top-1/2 transform -translate-y-1/2">
+            {/* Main Header */}
+            <div className="bg-white/90 backdrop-blur-md py-2 w-full relative z-20 border-b border-gray-100">
+                <div className="container mx-auto px-4">
+                    <div className="flex items-center justify-between h-16 md:h-24">
+                        <div className="w-10 md:w-1/3">
+                            <button onClick={() => setIsMobileMenuOpen(true)} className="md:hidden text-black p-2">
+                                <MenuIcon />
+                            </button>
+                        </div>
+                        <div className="flex-grow flex justify-center md:w-1/3">
+                            <button onClick={() => onNavigate('home')} className="block hover:opacity-80 transition-opacity">
+                                <img 
+                                    alt="Vellaperfumeria" 
+                                    className="transition-all duration-500 h-12 md:h-16 w-auto object-contain" 
+                                    src="https://i0.wp.com/vellaperfumeria.com/wp-content/uploads/2025/06/1000003724-removebg-preview.png" 
+                                />
+                            </button>
+                        </div>
+                        <div className="flex items-center justify-end w-10 md:w-1/3 gap-4">
+                            <div className="relative hidden md:block">
+                                <button className="text-black hover:text-pink-600 transition-colors" aria-label="Buscar">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-search" aria-hidden="true"><path d="m21 21-4.34-4.34"></path><circle cx="11" cy="11" r="8"></circle></svg>
+                                </button>
+                            </div>
                             <button 
-                                className={`cart-dest-icon relative p-2 text-black hover:text-[var(--color-accent)] transition-colors ${cartPulse ? 'animate-pop' : ''}`}
+                                className={`relative text-black hover:text-pink-600 transition-colors group ${cartPulse ? 'animate-pop' : ''}`} 
+                                aria-label="Carrito"
                                 onClick={onCartClick}
                             >
-                                <CartIcon />
+                                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
                                 {cartCount > 0 && (
-                                    <span className="absolute -top-1 -right-1 inline-flex items-center justify-center w-5 h-5 text-[10px] font-bold leading-none text-white bg-black rounded-full border border-white">
+                                    <span className="absolute -top-1 -right-1 bg-pink-500 text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center group-hover:bg-pink-600 transition-colors">
                                         {cartCount}
                                     </span>
                                 )}
                             </button>
                         </div>
                     </div>
+                </div>
+            </div>
 
-                    {/* Row 2: Navigation Menu Centered */}
-                    <nav className="flex justify-center space-x-10 w-full border-t border-gray-50 pt-6">
-                        <NavLink onClick={() => onNavigate('home')} className="font-serif italic tracking-wide">Inicio</NavLink>
-                        <NavLink onClick={() => onNavigate('products', 'all')} className="uppercase text-xs tracking-[0.2em]">Tienda</NavLink>
-                        <NavLink onClick={() => onNavigate('ofertas')} className="uppercase text-xs tracking-[0.2em]">Ideas Regalo</NavLink>
-                        <NavLink onClick={() => onNavigate('catalog')} className="uppercase text-xs tracking-[0.2em]">Catálogo</NavLink>
-                        <NavLink onClick={() => onNavigate('ia')} className="uppercase text-xs tracking-[0.2em]">Asistente IA</NavLink>
-                        <NavLink onClick={() => onNavigate('blog')} className="uppercase text-xs tracking-[0.2em]">Blog</NavLink>
+            {/* Navigation Bar */}
+            <div className="w-full bg-black text-white shadow-md relative z-40 transition-all duration-500 h-10 hidden md:block">
+                <div className="container mx-auto px-4 h-full">
+                    <nav className="flex justify-center items-center h-full text-[10px] sm:text-[11px] font-bold tracking-[0.15em] uppercase overflow-x-auto no-scrollbar whitespace-nowrap">
+                        <button onClick={() => onNavigate('home')} className="h-full px-5 flex items-center hover:bg-gray-900 hover:text-pink-400 transition-colors uppercase">Inicio</button>
+                        <div className="relative group h-full">
+                            <button onClick={() => onNavigate('products', 'all')} className="h-full px-4 flex items-center gap-1 hover:text-pink-400 transition-colors">
+                                Boutique Onin
+                                <svg className="w-3 h-3 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div className="absolute left-1/2 -translate-x-1/2 top-full w-64 bg-black border border-gray-800 shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+                                <div className="py-4">
+                                    <button onClick={() => onNavigate('ofertas')} className="w-full text-left px-6 py-3 text-[10px] hover:bg-white/10 transition-colors uppercase tracking-widest">Día de la Mujer</button>
+                                    <button onClick={() => onNavigate('products', 'skincare')} className="w-full text-left px-6 py-3 text-[10px] hover:bg-white/10 transition-colors uppercase tracking-widest">Cuidado Facial</button>
+                                    <button onClick={() => onNavigate('products', 'makeup')} className="w-full text-left px-6 py-3 text-[10px] hover:bg-white/10 transition-colors uppercase tracking-widest">Maquillaje</button>
+                                    <button onClick={() => onNavigate('products', 'perfume')} className="w-full text-left px-6 py-3 text-[10px] hover:bg-white/10 transition-colors uppercase tracking-widest">Fragancias</button>
+                                    <button onClick={() => onNavigate('products', 'wellness')} className="w-full text-left px-6 py-3 text-[10px] hover:bg-white/10 transition-colors uppercase tracking-widest">Wellness</button>
+                                    <button onClick={() => onNavigate('products', 'hair')} className="w-full text-left px-6 py-3 text-[10px] hover:bg-white/10 transition-colors uppercase tracking-widest">Cuidado del Cabello</button>
+                                    <button onClick={() => onNavigate('products', 'personal-care')} className="w-full text-left px-6 py-3 text-[10px] hover:bg-white/10 transition-colors uppercase tracking-widest">Cuidado Personal</button>
+                                    <button onClick={() => onNavigate('products', 'men')} className="w-full text-left px-6 py-3 text-[10px] hover:bg-white/10 transition-colors uppercase tracking-widest">Hombre</button>
+                                    <button onClick={() => onNavigate('products', 'accessories')} className="w-full text-left px-6 py-3 text-[10px] hover:bg-white/10 transition-colors uppercase tracking-widest">Accesorios</button>
+                                </div>
+                            </div>
+                        </div>
+                        <button onClick={() => onNavigate('ia')} className="h-full px-5 flex items-center hover:bg-gray-900 hover:text-pink-400 transition-colors uppercase">
+                            <span className="text-[#D4AF37] font-black italic">Beauty AI</span>
+                        </button>
+                        <button onClick={() => onNavigate('products', 'makeup')} className="h-full px-5 flex items-center hover:bg-gray-900 hover:text-pink-400 transition-colors uppercase">Encuentra tu Tono</button>
+                        <button onClick={() => onNavigate('blog')} className="h-full px-5 flex items-center hover:bg-gray-900 hover:text-pink-400 transition-colors uppercase">Editorial</button>
+                        <button onClick={() => onNavigate('products', 'wellness')} className="h-full px-5 flex items-center hover:bg-gray-900 hover:text-pink-400 transition-colors uppercase">Salud y Belleza</button>
+                        <button onClick={() => onNavigate('blog')} className="h-full px-5 flex items-center hover:bg-gray-900 hover:text-pink-400 transition-colors uppercase">Dormir Bien</button>
+                        <button onClick={() => onNavigate('products', 'all')} className="h-full px-5 flex items-center hover:bg-gray-900 hover:text-pink-400 transition-colors uppercase">Bestsellers</button>
+                        <button onClick={() => onNavigate('ofertas')} className="h-full px-5 flex items-center hover:bg-gray-900 hover:text-pink-400 transition-colors uppercase">Ofertas</button>
                     </nav>
                 </div>
             </div>

@@ -46,19 +46,40 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, currency, onA
         e.stopPropagation();
         if (product.stock === 0) return;
 
+        let defaultVariant: Record<string, string> | null = null;
+        if (product.variants) {
+            defaultVariant = {};
+            for (const key in product.variants) {
+                 if (product.variants[key].length > 0) {
+                    (defaultVariant as Record<string, string>)[key] = product.variants[key][0].value;
+                 }
+            }
+        }
+
         if (hasManyVariants) {
             onProductSelect(product);
         } else {
-            let defaultVariant: Record<string, string> | null = null;
-            if (product.variants) {
-                defaultVariant = {};
-                for (const key in product.variants) {
-                     if (product.variants[key].length > 0) {
-                        (defaultVariant as Record<string, string>)[key] = product.variants[key][0].value;
-                     }
-                }
-            }
             onQuickAddToCart(product, addToCartBtnRef.current, defaultVariant);
+        }
+    };
+
+    const handleGooglePlayClick = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        if (product.stock === 0) return;
+
+        let defaultVariant: Record<string, string> | null = null;
+        if (product.variants) {
+            defaultVariant = {};
+            for (const key in product.variants) {
+                 if (product.variants[key].length > 0) {
+                    (defaultVariant as Record<string, string>)[key] = product.variants[key][0].value;
+                 }
+            }
+        }
+        
+        // Direct to checkout with this product
+        if (onBuyNow) {
+            onBuyNow(product, null, defaultVariant);
         }
     };
 
@@ -142,6 +163,22 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, currency, onA
 
                     {/* Action Buttons Grid */}
                     <div className="space-y-2">
+                         {/* Google Play Button */}
+                         <button
+                            onClick={handleGooglePlayClick}
+                            disabled={product.stock === 0}
+                            className={`w-full py-3 rounded-none font-sans font-bold text-[10px] uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-2 border-2 ${
+                                product.stock === 0
+                                    ? 'bg-gray-50 text-gray-300 border-gray-100 cursor-not-allowed'
+                                    : 'bg-[#34A853] text-white border-[#34A853] hover:bg-white hover:text-[#34A853]'
+                            }`}
+                        >
+                            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M3.609 1.814L13.792 12 3.61 22.186c-.18.18-.29.43-.29.707 0 .55.45 1 1 1 .28 0 .53-.11.71-.29L16.209 12 5.03 1.107c-.18-.18-.43-.29-.71-.29-.55 0-1 .45-1 1 0 .28.11.53.29.707zM17.622 10.586l-2.414-2.414 2.414-2.414 2.414 2.414-2.414 2.414z" />
+                            </svg>
+                            {product.stock === 0 ? 'Agotado' : 'Pagar con Google Play'}
+                        </button>
+
                          {/* Add to Cart */}
                         <button
                             ref={addToCartBtnRef}

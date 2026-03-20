@@ -134,8 +134,12 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 </div>
             </div>
             <div className="bg-black border-t border-neutral-900 py-10 text-center text-[9px] text-neutral-600 tracking-[0.2em] uppercase">
-                <div className="container mx-auto px-4">
+                <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4">
                     <p>&copy; {new Date().getFullYear()} Vella Perfumería. Todos los derechos reservados.</p>
+                    <div className="flex items-center gap-2 opacity-40 hover:opacity-100 transition-opacity">
+                        <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                        <span>v2.0 (Live)</span>
+                    </div>
                 </div>
             </div>
         </footer>

@@ -3,6 +3,34 @@
 import type { Product } from './types';
 
 export const allProducts: Product[] = [
+    {
+        id: 38534,
+        name: "Giordani Gold Essenza Blossom Parfum",
+        brand: "Giordani Gold",
+        price: 34.99,
+        regularPrice: 58.00,
+        imageUrl: "https://media-cdn.oriflame.com/productImage?externalMediaId=product-management-media%2FProducts%2F38534%2F38534_1.png&MediaId=19190183&Version=2&w=600&bc=%23f5f5f5&ib=%23f5f5f5&h=600&q=90&imageFormat=WebP",
+        description: "Un perfume joya que celebra el 45 aniversario de Giordani Gold. Notas de Azahar, Camelia y Jazmín que crean una fragancia floral blanca, cálida y sofisticada.",
+        stock: 25,
+        category: "Fragancias",
+        tag: "NOVEDAD",
+        rating: 5.0,
+        reviewCount: 450
+    },
+    {
+        id: 45590,
+        name: "Set Novage+ Lift + Firm",
+        brand: "Novage+",
+        price: 119.99,
+        regularPrice: 185.00,
+        imageUrl: "https://media-cdn.oriflame.com/productImage?externalMediaId=product-management-media%2FProducts%2F45590%2F45590_1.png&MediaId=19190183&Version=2&w=600&bc=%23f5f5f5&ib=%23f5f5f5&h=600&q=90&imageFormat=WebP",
+        description: "Rutina completa de 4 pasos diseñada para restaurar la firmeza y elasticidad de la piel. Con tecnologías bioactivas que estimulan el colágeno y la elastina.",
+        stock: 12,
+        category: "Set",
+        tag: "OFERTA",
+        rating: 4.9,
+        reviewCount: 112
+    },
     // --- MEN'S PRODUCTS (NEW) ---
     {
         id: 42490,
